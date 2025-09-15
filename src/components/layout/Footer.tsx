@@ -3,7 +3,7 @@ import FacebookImage from "../../assets/images/facebook.png";
 import WhatsappImage from "../../assets/images/whatsapp.png";
 import YoutubeImage from "../../assets/images/youtube.png";
 import LinkedInimage from "../../assets/images/linkedin.png";
-import Logo from "../../assets/images/BsHeartPulse.png";
+import Logo from "../../assets/images/heartbeat (1).png";
 
 const Footer = () => {
   return (
@@ -13,8 +13,8 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                <div className="w-6 h-6 text-slate-900">
+              <div className="w-16 h-16 bg-transparent rounded-full flex items-center justify-center">
+                <div className="w-16 h-16 text-slate-900">
                   <img src={Logo} alt="logo" />
                 </div>
               </div>
