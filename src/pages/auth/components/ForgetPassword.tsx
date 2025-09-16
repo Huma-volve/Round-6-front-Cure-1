@@ -39,7 +39,7 @@ export default function ForgetPassword() {
           <img className="w-10 h-10" src={BsHeartPulse} alt="Logo" />
         </div>
         <div className="absolute top-30 left-10 lg:left-20">
-          <GoBackButton size={24} />
+          <GoBackButton />
         </div>
 
         <div className="w-[80%] flex flex-col justify-center mx-auto lg:w-1/3">

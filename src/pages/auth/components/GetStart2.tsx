@@ -9,7 +9,7 @@ export default function GetStart2() {
   return (
     <div className="h-screen overflow-hidden relative">
       <div className="absolute top-30 left-12">
-        <GoBackButton size={24} />
+        <GoBackButton />
       </div>
       <img
         className="relative top-15 left-10 w-10 h-10"
