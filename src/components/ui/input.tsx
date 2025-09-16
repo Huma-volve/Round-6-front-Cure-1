@@ -28,9 +28,9 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
           className="absolute right-3 top-1/2 cursor-pointer text-primary -translate-y-1/2"
         >
           {showPassword ? (
-            <EyeOff className="h-4 w-4" />
-          ) : (
             <Eye className="h-4 w-4" />
+          ) : (
+            <EyeOff className="h-4 w-4" />
           )}
         </button>
       )}
