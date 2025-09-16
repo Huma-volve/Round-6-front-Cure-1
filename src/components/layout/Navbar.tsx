@@ -177,8 +177,10 @@ const Navbar = () => {
         </>
       )}
 
+      <div className="h-[2000px]"></div>
+
       {/* Bottom Navigation */}
-      <nav className="bg-white border-t border-gray-200 px-4 py-2 md:hidden">
+      <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-4 py-2 md:hidden z-50">
         <div className="flex justify-around">
           <button
             onClick={() => setActiveTab("home")}

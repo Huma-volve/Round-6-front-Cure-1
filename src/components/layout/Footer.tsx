@@ -7,7 +7,7 @@ import Logo from "../../assets/images/heartbeat (1).png";
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-900 text-white py-12 px-6">
+    <footer className="bg-slate-900 text-white py-12 px-6 mb-11 md:mb-0">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
