@@ -28,7 +28,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className=" bg-gray-50 flex flex-col">
       {/* Header */}
       <header className="bg-white hidden md:flex shadow-sm px-4 py-3  items-center justify-between relative z-20 ">
         {/* Logo/Menu */}
@@ -57,7 +57,6 @@ const Navbar = () => {
             <Menu className="w-5 h-5 text-gray-600" />
           </button>
 
-          {/* Desktop Icons */}
           <button className="hidden md:block p-2 hover:bg-gray-100 rounded-lg">
             <Heart className="w-5 h-5 text-gray-600" />
           </button>
@@ -66,7 +65,6 @@ const Navbar = () => {
             <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
           </button>
 
-          {/* Profile Photo */}
           <button onClick={toggleProfile} className="relative">
             <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200">
               <img
