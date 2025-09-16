@@ -191,11 +191,11 @@ export default function SignUp() {
                   checked={checkbox}
                   onCheckedChange={(checked) => setCheckbox(Boolean(checked))}
                 />
-                <Label htmlFor="terms" className="text-sm">
+                <p className="text-xs md:text-sm my-4">
                   I agree to the{" "}
                   <span className="text-primary">Terms of Service</span> and{" "}
                   <span className="text-primary">Privacy Policy</span>
-                </Label>
+                </p>
               </div>
 
               <Button
