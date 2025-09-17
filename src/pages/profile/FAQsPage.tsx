@@ -8,7 +8,7 @@ import {
 import { ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export const FAQsPage = () => {
+export default function FAQsPage() {
     const nav = useNavigate();
     return (
         <div className="min-h-screen bg-white">

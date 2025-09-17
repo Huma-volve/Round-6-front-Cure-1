@@ -5,11 +5,9 @@ import {
   HelpCircle,
   LogOut,
   Settings as SettingsIcon,
-  Shield
+  Shield,
 } from "lucide-react";
 import React from "react";
-
-
 
 // ===== Mock Data =====
 const items: ProfileItem[] = [
@@ -65,30 +63,31 @@ const items: ProfileItem[] = [
   },
 ];
 
-
-
 const Divider = () => <div className="h-px bg-zinc-100 my-1" />;
 
 import ProfileHeader from "../../components/profile/ProfileHeader";
 import SettingsRow from "../../components/profile/SettingsRow";
-import Card from "../../components/ui/Card";
+import { Card } from "../../components/ui/Card";
 import type { ProfileItem } from "../../types/profile";
 
 export default function ProfileScreen() {
   const [data, setData] = React.useState<ProfileItem[]>(items);
 
   const handleToggle = (id: string, next: boolean) => {
-    setData((prev) => prev.map((it) => (it.id === id ? { ...it, enabled: next } : it)));
+    setData((prev) =>
+      prev.map((it) => (it.id === id ? { ...it, enabled: next } : it))
+    );
   };
-
-
 
   return (
     <div className="min-h-screen bg-zinc-50 py-4 sm:py-8">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-3 sm:px-6 lg:grid-cols-3 lg:gap-6">
         {/* Left: Profile */}
         <div className="lg:col-span-1">
-          <ProfileHeader name="Seif Mohamed" address="129, El-Nasr Street, Cairo" />
+          <ProfileHeader
+            name="Seif Mohamed"
+            address="129, El-Nasr Street, Cairo"
+          />
         </div>
 
         {/* Right: Settings */}
@@ -101,7 +100,6 @@ export default function ProfileScreen() {
             ))}
           </ul>
         </div>
-
       </div>
 
       {/* Optional sticky footer (mobile only) */}
@@ -110,7 +108,9 @@ export default function ProfileScreen() {
           <div className="flex items-center justify-between p-3">
             <div>
               <p className="text-xs text-zinc-500">Logged in as</p>
-              <p className="text-sm font-medium text-zinc-800">seif.mohamed@example.com</p>
+              <p className="text-sm font-medium text-zinc-800">
+                seif.mohamed@example.com
+              </p>
             </div>
             <button className="rounded-xl px-3 py-2 text-sm font-medium bg-zinc-900 text-white">
               Manage Account
