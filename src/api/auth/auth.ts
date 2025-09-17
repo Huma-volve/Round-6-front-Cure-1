@@ -35,7 +35,7 @@ export const handleSignUp = async (values: ISignUp) => {
       password_confirmation: values.password,
     });
 
-    if (res.status === 200) {
+    if (res.status === 201) {
       toast.success("Sign up successful");
       return true;
     }
