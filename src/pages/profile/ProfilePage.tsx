@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import React from "react";
 
-// ===== Mock Data =====
 const items: ProfileItem[] = [
   {
     id: "notifications",
@@ -69,6 +68,7 @@ import ProfileHeader from "../../components/profile/ProfileHeader";
 import SettingsRow from "../../components/profile/SettingsRow";
 import { Card } from "../../components/ui/Card";
 import type { ProfileItem } from "../../types/profile";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileScreen() {
   const [data, setData] = React.useState<ProfileItem[]>(items);
@@ -78,19 +78,18 @@ export default function ProfileScreen() {
       prev.map((it) => (it.id === id ? { ...it, enabled: next } : it))
     );
   };
-
   return (
     <div className="min-h-screen bg-zinc-50 py-4 sm:py-8">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-3 sm:px-6 lg:grid-cols-3 lg:gap-6">
-        {/* Left: Profile */}
-        <div className="lg:col-span-1">
+
+        <div className="lg:col-span-1 "  >
           <ProfileHeader
             name="Seif Mohamed"
             address="129, El-Nasr Street, Cairo"
           />
         </div>
 
-        {/* Right: Settings */}
+
         <div className="lg:col-span-2">
           <ul className="mx-auto max-w-md px-3 space-y-3">
             {data.map((item) => (
@@ -100,23 +99,6 @@ export default function ProfileScreen() {
             ))}
           </ul>
         </div>
-      </div>
-
-      {/* Optional sticky footer (mobile only) */}
-      <div className="fixed inset-x-0 bottom-0 z-10 mx-auto w-full max-w-2xl px-3 pb-3 lg:hidden">
-        <Card>
-          <div className="flex items-center justify-between p-3">
-            <div>
-              <p className="text-xs text-zinc-500">Logged in as</p>
-              <p className="text-sm font-medium text-zinc-800">
-                seif.mohamed@example.com
-              </p>
-            </div>
-            <button className="rounded-xl px-3 py-2 text-sm font-medium bg-zinc-900 text-white">
-              Manage Account
-            </button>
-          </div>
-        </Card>
       </div>
     </div>
   );

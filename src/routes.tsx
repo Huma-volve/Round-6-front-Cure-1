@@ -15,6 +15,7 @@ import ProfileScreen from "./pages/profile/ProfilePage";
 import { PrivacyPage } from "./pages/profile/PrivacyPolicyPage";
 import Notifications from "./pages/notification/Notifications";
 import Review from "./pages/review/Review";
+import EditProfilePage from "./pages/profile/EditProfile";
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "/doctor/:id/review",
         element: <Review />,
+      },
+      {
+        path: "/edit-profile",
+        element: <EditProfilePage />,
       },
     ],
   },
