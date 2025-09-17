@@ -16,6 +16,8 @@ const DoctorBooking = () => {
   const [specialties, setSpecialties] = useState<ISpecialist[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const doctorsPerPage = 6;
 
   useEffect(() => {
     const loadData = async () => {
@@ -78,6 +80,21 @@ const DoctorBooking = () => {
           return 0;
       }
     });
+
+  const indexOfLastDoctor = currentPage * doctorsPerPage;
+  const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
+  const currentDoctors = filteredDoctors.slice(
+    indexOfFirstDoctor,
+    indexOfLastDoctor
+  );
+
+  const totalPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   if (loading)
     return (
@@ -267,16 +284,41 @@ const DoctorBooking = () => {
               !filterOpen ? "xl:grid-cols-3" : ""
             } gap-6 mb-8`}
           >
-            {filteredDoctors.map((doctor) => (
+            {currentDoctors.map((doctor) => (
               <CardDoctor key={doctor.doctor_profile_id} doctor={doctor} />
             ))}
           </div>
 
           {/* Pagination */}
-          <div className="flex justify-center">
-            <button className="flex items-center gap-2 px-6 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors">
-              <span className="text-sm text-gray-600">Next Page</span>
-              <ChevronRight size={16} className="text-gray-400" />
+          <div className="flex justify-center items-center gap-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-4 py-2 border rounded-lg bg-white disabled:opacity-50"
+            >
+              Prev
+            </button>
+
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => handlePageChange(index + 1)}
+                className={`px-4 py-2 border rounded-lg ${
+                  currentPage === index + 1
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "bg-white text-gray-600 border-gray-300"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 border rounded-lg bg-white disabled:opacity-50"
+            >
+              Next
             </button>
           </div>
         </div>
