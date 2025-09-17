@@ -59,7 +59,7 @@ const items: ProfileItem[] = [
     icon: LogOut,
     type: "link",
     tone: "danger",
-    onClick: () => alert("Logged out (demo)"),
+    onClick: () => localStorage.removeItem("token"),
   },
 ];
 

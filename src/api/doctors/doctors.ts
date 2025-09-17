@@ -42,31 +42,20 @@ export const doctorReview = async (values: IReview) => {
       { headers }
     );
 
-    if (res.status === 201 || res.status === 200) {
+    if (res.status === 200 || res.status === 201) {
       toast.success("Review submitted");
-
-      return res.data ?? true;
+      return true;
     }
 
     toast.error("Unexpected response from server");
-    return null;
+    return false;
   } catch (error) {
-    const err = error as AxiosError<{ message?: string; errors?: unknown }>;
-
-    if (err.response) {
-      const status = err.response.status;
-      const msg = err.response.data?.message;
-
-      if (status === 401) {
-        toast.error("Please log in to submit a review");
-      } else if (status === 422) {
-        toast.error(msg || "Invalid review data");
-      } else {
-        toast.error(msg || "Server error");
-      }
+    const err = error as AxiosError<{ message?: string }>;
+    if (err.response?.status === 401) {
+      toast.error("Please log in to submit a review");
     } else {
-      toast.error(err.message || "Network error");
+      toast.error(err.response?.data?.message || "Something went wrong");
     }
-    return null;
+    return false;
   }
 };

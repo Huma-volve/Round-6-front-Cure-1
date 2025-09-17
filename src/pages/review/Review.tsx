@@ -20,13 +20,19 @@ export default function ReviewPage() {
     const display = hover ?? rating;
     const { id } = useParams();
     async function handleSubmit(e: React.FormEvent) {
-
-
         e.preventDefault();
 
-        setOpen(true);
-        await doctorReview({ id: Number(id), rating, comment: text });
+        const success = await doctorReview({
+            id: Number(id),
+            rating,
+            comment: text,
+        });
+
+        if (success) {
+            setOpen(true);
+        }
     }
+
 
     return (
         <div className="min-h-screen bg-white">
