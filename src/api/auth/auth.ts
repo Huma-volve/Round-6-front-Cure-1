@@ -10,9 +10,9 @@ export const handleLogin = async (values: ISignIn) => {
   try {
     const res = await axios.post(`${BASE_URL}login`, values);
 
-    if (res.status === 200) {
+    if (res.status === 201) {
       toast.success("Login successful");
-      localStorage.setItem("token", res.data.data.token);
+      localStorage.setItem("token", res.data.token);
       return true;
     }
   } catch (error) {

@@ -11,8 +11,7 @@ export const handleGetFavorites = async () => {
     });
 
     if (res.status === 200) {
-      toast.success("Favourites fetched successfully");
-      return res.data;
+      return res.data.data;
     }
   } catch (error) {
     console.error("Get favourites error:", error);

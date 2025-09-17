@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Filter, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
+import { Filter, MapPin, ChevronLeft } from "lucide-react";
 import CardDoctor from "@/components/common/CardDoctor";
 import type { IDoctorDetails, ISpecialist } from "@/types";
 import { fetchDoctorsData } from "@/api/doctors/doctors";
 import { Loader } from "@/components/common/Loader";
 import { fetchSpecialitiesData } from "@/api/specialities/specialities";
+import { useFavourites } from "@/hooks/useFavourite";
 
 const DoctorBooking = () => {
   const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>([]);
@@ -18,6 +19,7 @@ const DoctorBooking = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const doctorsPerPage = 6;
+  const { favouritesIDs, toggleFavourite } = useFavourites();
 
   useEffect(() => {
     const loadData = async () => {
@@ -234,6 +236,7 @@ const DoctorBooking = () => {
             <div>
               <h3 className="font-medium text-gray-900 mb-3">Sort</h3>
               <select
+                title="Sort"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
@@ -285,13 +288,22 @@ const DoctorBooking = () => {
             } gap-6 mb-8`}
           >
             {currentDoctors.map((doctor) => (
-              <CardDoctor key={doctor.doctor_profile_id} doctor={doctor} />
+              <CardDoctor
+                key={doctor.doctor_profile_id}
+                doctor={doctor}
+                isFavourite={favouritesIDs.includes(doctor.doctor_profile_id)}
+                onToggleFavourite={() =>
+                  toggleFavourite(doctor.doctor_profile_id)
+                }
+              />
             ))}
           </div>
 
           {/* Pagination */}
           <div className="flex justify-center items-center gap-2">
             <button
+              type="button"
+              title="Previous"
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
               className="px-4 py-2 border rounded-lg bg-white disabled:opacity-50"
@@ -301,6 +313,8 @@ const DoctorBooking = () => {
 
             {Array.from({ length: totalPages }, (_, index) => (
               <button
+                type="button"
+                title={`Page ${index + 1}`}
                 key={index + 1}
                 onClick={() => handlePageChange(index + 1)}
                 className={`px-4 py-2 border rounded-lg ${
@@ -314,6 +328,8 @@ const DoctorBooking = () => {
             ))}
 
             <button
+              type="button"
+              title="Next"
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
               className="px-4 py-2 border rounded-lg bg-white disabled:opacity-50"
