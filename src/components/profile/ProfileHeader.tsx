@@ -1,5 +1,5 @@
 import { MapPin } from "lucide-react";
-import { Card } from "../ui/Card";
+import { Card } from "../ui/card";
 
 type Props = {
   name: string;
