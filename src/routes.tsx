@@ -10,6 +10,8 @@ import ForgetPassword from "./pages/auth/components/ForgetPassword";
 import VerifyOTP from "./pages/auth/components/VerifyOTP";
 import ResetPassword from "./pages/auth/components/ResetPassword";
 import DoctorDetails from "./pages/doctorDetails/DoctorDetails";
+import FAQsPage from "./pages/profile/FAQsPage";
+import ProfileScreen from "./pages/profile/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +57,14 @@ export const router = createBrowserRouter([
       {
         path: "/doctors/:id",
         element: <DoctorDetails />,
+      },
+      {
+        path: "/profile",
+        element: <ProfileScreen />,
+      },
+      {
+        path: "/faqs",
+        element: <FAQsPage />,
       },
     ],
   },
