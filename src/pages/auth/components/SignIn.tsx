@@ -86,6 +86,7 @@ export default function SignIn() {
 
   const handleLoginSubmit = async (values: ISignIn) => {
     const res = await handleLogin(values);
+    console.log("Login response:", res);
     if (res) {
       navigate("/");
     }
