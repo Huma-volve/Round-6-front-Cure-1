@@ -25,6 +25,7 @@ export const handleAddFavorite = async (doctorId: string) => {
       `${BASE_URL}favourites/doctors/${doctorId}`,
       {},
       {
+        
         headers: { Authorization: `Bearer ${TOKEN}` },
       }
     );
