@@ -25,7 +25,7 @@ export default function ReviewPage() {
         e.preventDefault();
 
         setOpen(true);
-        await doctorReview({ id: 1, rating: 4, comment: "Great doctor!" });
+        await doctorReview({ id: Number(id), rating, comment: text });
     }
 
     return (

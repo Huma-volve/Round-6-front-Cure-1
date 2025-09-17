@@ -1,7 +1,7 @@
 import type { IDoctorDetails, IReview } from "@/types";
 import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
-const BASE_URL = import.meta.env.BASE_URL;
+
 export const fetchDoctorsData = async (): Promise<IDoctorDetails[]> => {
   const response = await fetch(
     "https://round5-online-booking-with-doctor-api.huma-volve.com/api/doctors",
