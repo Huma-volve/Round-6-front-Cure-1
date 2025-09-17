@@ -53,19 +53,32 @@ const Navbar = () => {
         {/* Right Side Icons */}
         <div className="flex items-center space-x-4 mr-10">
           {/* Mobile Menu */}
-          <button className="md:hidden p-2">
+          <button type="button" title="Menu" className="md:hidden p-2">
             <Menu className="w-5 h-5 text-gray-600" />
           </button>
 
-          <button className="hidden md:block p-2 hover:bg-gray-100 rounded-lg">
+          <button
+            type="button"
+            title="Heart"
+            className="hidden md:block p-2 hover:bg-gray-100 rounded-lg"
+          >
             <Heart className="w-5 h-5 text-gray-600" />
           </button>
-          <button className="hidden md:block p-2 hover:bg-gray-100 rounded-lg relative">
+          <button
+            type="button"
+            title="Bell"
+            className="hidden md:block p-2 hover:bg-gray-100 rounded-lg relative"
+          >
             <Bell className="w-5 h-5 text-gray-600" />
             <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
           </button>
 
-          <button onClick={toggleProfile} className="relative">
+          <button
+            type="button"
+            title="Profile"
+            onClick={toggleProfile}
+            className="relative"
+          >
             <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200">
               <img
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
@@ -98,10 +111,18 @@ const Navbar = () => {
             </div>
           </div>
           <div className="flex space-x-2">
-            <button className="p-2 hover:bg-gray-100 rounded-lg">
+            <button
+              type="button"
+              title="Heart"
+              className="p-2 hover:bg-gray-100 rounded-lg"
+            >
               <Heart className="w-5 h-5 text-gray-600" />
             </button>
-            <button className="p-2 hover:bg-gray-100 rounded-lg relative">
+            <button
+              type="button"
+              title="Bell"
+              className="p-2 hover:bg-gray-100 rounded-lg relative"
+            >
               <Bell className="w-5 h-5 text-gray-600" />
               <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
             </button>
@@ -141,31 +162,51 @@ const Navbar = () => {
                     📍 129 El-Nasr Street, Cairo
                   </p>
                 </div>
-                <button className="p-1 cursor-pointer hover:bg-gray-100 rounded">
+                <button
+                  type="button"
+                  title="Settings"
+                  className="p-1 cursor-pointer hover:bg-gray-100 rounded"
+                >
                   <Settings className="w-4 h-4 text-gray-600" />
                 </button>
               </div>
 
               <div className="space-y-1">
-                <button className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg">
+                <button
+                  type="button"
+                  title="Payment Method"
+                  className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                >
                   <CreditCard className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Payment Method</span>
                   <ChevronRight className="w-4 h-4 text-gray-400" />
                 </button>
 
-                <button className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg">
+                <button
+                  type="button"
+                  title="Settings"
+                  className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                >
                   <Settings className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Settings</span>
                   <ChevronRight className="w-4 h-4 text-gray-400" />
                 </button>
 
-                <button className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg">
+                <button
+                  type="button"
+                  title="Privacy Policy"
+                  className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                >
                   <Shield className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Privacy Policy</span>
                   <ChevronRight className="w-4 h-4 text-gray-400" />
                 </button>
 
-                <button className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-red-50 rounded-lg">
+                <button
+                  type="button"
+                  title="Log out"
+                  className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-red-50 rounded-lg"
+                >
                   <LogOut className="w-5 h-5 text-red-600" />
                   <span className="flex-1 text-red-600">Log out</span>
                 </button>
@@ -179,6 +220,8 @@ const Navbar = () => {
       <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-4 py-2 md:hidden z-50">
         <div className="flex justify-around">
           <button
+            type="button"
+            title="Home"
             onClick={() => setActiveTab("home")}
             className={`flex flex-col items-center py-2 px-4 ${
               activeTab === "home" ? "text-blue-600" : "text-gray-600"
@@ -189,6 +232,8 @@ const Navbar = () => {
           </button>
 
           <button
+            type="button"
+            title="Booking"
             onClick={() => setActiveTab("booking")}
             className={`flex flex-col items-center py-2 px-4 ${
               activeTab === "booking" ? "text-blue-600" : "text-gray-600"
@@ -199,6 +244,8 @@ const Navbar = () => {
           </button>
 
           <button
+            type="button"
+            title="Profile"
             onClick={() => setActiveTab("profile")}
             className={`flex flex-col items-center py-2 px-4 ${
               activeTab === "profile" ? "text-blue-600" : "text-gray-600"

@@ -311,6 +311,7 @@ const DoctorBooking = () => {
           <div>
             <h3 className="font-medium text-gray-900 mb-3">Sort</h3>
             <select
+              title="Sort"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
