@@ -31,6 +31,7 @@ export type IDoctorDetails = {
     day: string;
     start_time: string;
     end_time: string;
+    average_rating:number
 };
 
 export type ISpecialist = {

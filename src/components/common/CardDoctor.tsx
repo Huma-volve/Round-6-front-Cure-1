@@ -1,17 +1,26 @@
 import { Star, Clock } from "lucide-react";
 import type { IDoctorDetails } from "../../types";
 import doctorPhoto from "../../assets/images/doctorPhoto.jpg";
+import { Link } from "react-router-dom";
 
 type DoctorCardProps = {
   doctor: IDoctorDetails;
   onBook?: (id: number) => void;
 };
 
+const formatTime = (time: string) => {
+  const [hours, minutes] = time.split(":").map(Number);
+  const suffix = hours >= 12 ? "PM" : "AM";
+  const formattedHours = ((hours + 11) % 12) + 1; // يحول 13 → 1
+  return `${formattedHours}:${minutes.toString().padStart(2, "0")} ${suffix}`;
+};
+
 function CardDoctor({ doctor }: DoctorCardProps) {
   return (
-    <div
+    <Link
+      to={`details/${doctor.user_id}`}
       key={doctor.doctor_profile_id}
-      className="bg-white m-w-[84%] rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+      className="bg-white m-w-[84%] rounded-lg shadow-sm border border-gray-200 p-3 hover:shadow-md transition-shadow"
     >
       <div className="flex items-start gap-4 mb-4">
         <img
@@ -28,13 +37,16 @@ function CardDoctor({ doctor }: DoctorCardProps) {
             <div className="flex items-center gap-1">
               <Star size={14} className="fill-yellow-400 text-yellow-400" />
               <span className="text-sm font-medium">
-                {doctor.experience_years} yrs
+                {Number(doctor.average_rating).toFixed(1)}
               </span>
             </div>
             <div className="flex items-center gap-1">
               <Clock size={16} className="text-gray-400" />
               <span className="text-sm text-black">
-                {doctor.start_time} - {doctor.end_time}
+                <span>
+                  {formatTime(doctor.start_time)} -{" "}
+                  {formatTime(doctor.end_time)}
+                </span>
               </span>
             </div>
           </div>
@@ -56,7 +68,7 @@ function CardDoctor({ doctor }: DoctorCardProps) {
       >
         Book appointment
       </button>
-    </div>
+    </Link>
   );
 }
 
