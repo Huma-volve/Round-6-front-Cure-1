@@ -73,7 +73,7 @@ const DoctorBooking = () => {
         case "Price high to low":
           return +b.price_per_hour - +a.price_per_hour;
         case "Highest rated":
-          return b.average_rating - a.average_rating;
+          return (b.average_rating ?? 0) - (a.average_rating ?? 0);
         default:
           return 0;
       }
@@ -268,7 +268,7 @@ const DoctorBooking = () => {
             } gap-6 mb-8`}
           >
             {filteredDoctors.map((doctor) => (
-              <CardDoctor doctor={doctor} />
+              <CardDoctor key={doctor.doctor_profile_id} doctor={doctor} />
             ))}
           </div>
 
