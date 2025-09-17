@@ -12,6 +12,8 @@ import ResetPassword from "./pages/auth/components/ResetPassword";
 import DoctorDetails from "./pages/doctorDetails/DoctorDetails";
 import FAQsPage from "./pages/profile/FAQsPage";
 import ProfileScreen from "./pages/profile/ProfilePage";
+import { PrivacyPage } from "./pages/profile/PrivacyPolicyPage";
+import Notifications from "./pages/notification/Notifications";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +67,14 @@ export const router = createBrowserRouter([
       {
         path: "/faqs",
         element: <FAQsPage />,
+      },
+      {
+        path: "/privacy",
+        element: <PrivacyPage />,
+      },
+      {
+        path: "/notifications",
+        element: <Notifications />,
       },
     ],
   },
