@@ -67,7 +67,7 @@ const Divider = () => <div className="h-px bg-zinc-100 my-1" />;
 
 import ProfileHeader from "../../components/profile/ProfileHeader";
 import SettingsRow from "../../components/profile/SettingsRow";
-import { Card } from "../../components/ui/card";
+import { Card } from "../../components/ui/Card";
 import type { ProfileItem } from "../../types/profile";
 
 export default function ProfileScreen() {
