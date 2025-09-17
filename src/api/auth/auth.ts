@@ -12,7 +12,7 @@ export const handleLogin = async (values: ISignIn) => {
 
     if (res.status === 200) {
       toast.success("Login successful");
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.data.token);
       return true;
     }
   } catch (error) {
