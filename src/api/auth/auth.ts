@@ -10,7 +10,7 @@ export const handleLogin = async (values: ISignIn) => {
   try {
     const res = await axios.post(`${BASE_URL}login`, values);
 
-    if (res.status === 200) {
+    if (res.status === 201) {
       toast.success("Login successful");
       localStorage.setItem("token", res.data.token);
       return true;
@@ -62,7 +62,6 @@ export const handleSendOtp = async (values: { email: string }) => {
       const otpNote = res.data.data.note;
       const otpMatch = otpNote.match(/\{(\d+)\}/);
       userOTP = otpMatch[1];
-      console.log(userOTP);
       return true;
     }
   } catch (error) {
