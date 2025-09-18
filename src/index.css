@@ -152,3 +152,9 @@
         @apply bg-background text-foreground font-montserrat;
     }
 }
+
+/* updating dialog (shadcn sheet component) overlay to apear above other layers*/
+[data-slot="sheet-overlay"],
+[data-slot="alert-dialog-overlay"] {
+    z-index: 9999;
+}

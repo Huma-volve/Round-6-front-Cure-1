@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import Layout from "./components/layout/Layout";
 import { DoctorDetails } from "./pages/index";
+import { loader as doctorDetailsLoader } from "./pages/doctorDetails/DoctorDetails";
 
 export const router = createBrowserRouter([
     {
@@ -8,8 +10,9 @@ export const router = createBrowserRouter([
         element: <Layout />,
         children: [
             {
-                path: "/doctors/:id",
+                path: "/doctors/:doctorId",
                 element: <DoctorDetails />,
+                loader: doctorDetailsLoader,
             },
         ],
     },

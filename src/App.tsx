@@ -4,12 +4,12 @@ import { router } from "./routes";
 import { Toaster } from "react-hot-toast";
 
 function App() {
-  return (
-    <>
-      <RouterProvider router={router} />
-      <Toaster />
-    </>
-  );
+    return (
+        <>
+            <RouterProvider router={router} />
+            <Toaster />
+        </>
+    );
 }
 
 export default App;

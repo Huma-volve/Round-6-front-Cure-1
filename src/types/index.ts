@@ -31,6 +31,8 @@ export type IDoctorDetails = {
     day: string;
     start_time: string;
     end_time: string;
+    average_rating: string;
+    reviews_count: number;
 };
 
 export type ISpecialist = {
@@ -114,4 +116,66 @@ export type INotification = {
     read_at: Date;
     created_at: Date;
     created_at_formatted: string;
+};
+
+export type IAppointmentValues = {
+    date: string;
+    time: string;
+    doctor_id: number;
+};
+
+export type IDoctorReview = {
+    id: number;
+    user_id: number;
+    doctor_id: number;
+    rating: number;
+    comment: string;
+    created_at: Date;
+    updated_at: Date;
+    user: User;
+};
+
+export type IReviewsResponse = {
+    current_page: number;
+    data: IReview[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: IReviewsLink[];
+    next_page_url: string;
+    path: string;
+    per_page: number;
+    prev_page_url: null;
+    to: number;
+    total: number;
+};
+
+export type IReview = {
+    id: number;
+    user_id: number;
+    doctor_id: number;
+    rating: number;
+    comment: string;
+    created_at: Date;
+    updated_at: Date;
+    user: User;
+};
+
+export type User = {
+    id: number;
+    name: Name;
+    avatar: null;
+};
+
+export enum Name {
+    Cfbcb = "cfbcb",
+    HumaVolve = "Huma Volve",
+    Mohamed = "Mohamed",
+}
+
+export type IReviewsLink = {
+    url: null | string;
+    label: string;
+    active: boolean;
 };
