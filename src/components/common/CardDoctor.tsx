@@ -25,7 +25,7 @@ function CardDoctor({
   const [toggleHeart, setToggleHeart] = useState(isFavourite);
   return (
     <>
-      <div className="border border-gray-200 p-4 rounded-lg text-xs lg:text-base">
+      <div className="border border-gray-300 p-4 rounded-lg text-xs lg:text-base">
         <div className="flex items-start gap-4 mb-2">
           <img
             src={doctorPhoto}
@@ -63,7 +63,7 @@ function CardDoctor({
               )}
             </div>
 
-            <div className="flex text-xs gap-2 items-center">
+            <div className="flex flex-col sm:flex-row text-xs gap-2 sm:items-center">
               <div className="flex items-center gap-1">
                 <Star size={14} className="fill-yellow-400 text-yellow-400" />
                 <span className="font-medium">
