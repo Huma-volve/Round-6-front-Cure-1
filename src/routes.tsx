@@ -28,6 +28,7 @@ import {
   ProtectedRoute,
   NotFound,
   MapSearch,
+  ContactUs,
 } from "./pages/index";
 import { loader as doctorDetailsLoader } from "./pages/doctorDetails/DoctorDetails";
 import { loader as appointmentsLoader } from "./pages/appointments/Appointments";
@@ -139,6 +140,10 @@ export const router = createBrowserRouter([
       {
         path: "/search-map",
         element: <MapSearch />,
+      },
+      {
+        path: "/contact-us",
+        element: <ContactUs />,
       },
     ],
   },
