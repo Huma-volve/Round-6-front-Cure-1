@@ -10,7 +10,7 @@ import {
 import DoctorHeader from "./DoctorHeader";
 import type { IDoctorDetails } from "@/types";
 import { Button } from "@/components/ui/button";
-import ScheduleLabel from "./ScheduleLabel";
+import ScheduleLabel from "../../../components/common/ScheduleLabel";
 import DoctorPricing from "./DoctorPricing";
 import PaymentMethods from "./PaymentMethods";
 

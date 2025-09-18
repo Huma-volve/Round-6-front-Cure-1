@@ -1,6 +1,7 @@
 import { BadgeCheck, Pin } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/lib/utils";
+import doctorPlaceholderImg from "@/assets/images/doctor-placeholder.jpeg";
 
 type DoctorHeaderProps = {
     doctorName: string;
@@ -19,7 +20,10 @@ function DoctorHeader({
         <section className={`flex items-center gap-x-3 gap-y-2 ${className}`}>
             <section className="relative">
                 <Avatar className="w-24 h-24 shadow-[3px_3px_0px_0px] shadow-primary-100">
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarImage
+                        src={doctorPlaceholderImg}
+                        className="object-cover"
+                    />
                     <AvatarFallback>{getInitials(doctorName)}</AvatarFallback>
                 </Avatar>
                 <BadgeCheck className="fill-primary-100 text-[#ffffffc5] absolute bottom-0 right-0" />

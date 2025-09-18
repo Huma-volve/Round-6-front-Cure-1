@@ -13,7 +13,7 @@ import type {
     IDoctorDetails,
 } from "@/types";
 import PaymentDialog from "./PaymentDialog";
-import ScheduleLabel from "./ScheduleLabel";
+import ScheduleLabel from "@/components/common/ScheduleLabel";
 import { createDoctorAppointment } from "@/api/doctors/doctors";
 import { SheetTrigger } from "@/components/ui/sheet";
 import MessageDialog from "@/components/common/MessageDialog";
