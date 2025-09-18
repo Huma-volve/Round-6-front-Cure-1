@@ -30,7 +30,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 const Navbar = () => {
   const [logoutOpen, setLogoutOpen] = React.useState(false);
   const navigate = useNavigate();
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
 
@@ -44,7 +44,10 @@ const Navbar = () => {
 
   const logout = async () => {
     const res = await handleLogout();
-    if (res) navigate("/sign-in");
+    if (res) {
+      setUser(null);
+      navigate("/sign-in");
+    }
   };
 
   return (

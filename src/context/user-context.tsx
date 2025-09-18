@@ -1,10 +1,24 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import axios from "axios";
 import type { IUserData } from "@/types";
 
-export const UserContext = createContext({
-  user: null as IUserData | null,
+type UserContextType = {
+  user: IUserData | null;
+  handleGetUser: () => void;
+  setUser: Dispatch<SetStateAction<IUserData | null>>;
+};
+
+export const UserContext = createContext<UserContextType>({
+  user: null,
   handleGetUser: () => {},
+  setUser: () => {},
 });
 
 export const UserContextProvider = ({
@@ -31,14 +45,12 @@ export const UserContextProvider = ({
     }
   };
 
-  console.log(user);
-
   useEffect(() => {
     handleGetUser();
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, handleGetUser }}>
+    <UserContext.Provider value={{ user, handleGetUser, setUser }}>
       {children}
     </UserContext.Provider>
   );
