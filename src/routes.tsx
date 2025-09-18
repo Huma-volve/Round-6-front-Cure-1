@@ -8,6 +8,7 @@ import SignIn from "./pages/auth/components/SignIn";
 import ForgetPassword from "./pages/auth/components/ForgetPassword";
 import VerifyOTP from "./pages/auth/components/VerifyOTP";
 import ResetPassword from "./pages/auth/components/ResetPassword";
+import Favourite from "./pages/favourite/Favourite";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/favourite",
+        element: <Favourite />,
       },
     ],
   },

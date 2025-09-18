@@ -14,8 +14,10 @@ import {
   ChevronRight,
 } from "lucide-react";
 import CureIcon from "../common/CureIcon";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
 
@@ -28,7 +30,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="bg-gray-50 flex flex-col">
       {/* Header */}
       <header className="bg-white hidden md:flex shadow-sm px-4 py-3  items-center justify-between relative z-20 ">
         {/* Logo/Menu */}
@@ -58,10 +60,17 @@ const Navbar = () => {
           </button>
 
           {/* Desktop Icons */}
-          <button className="hidden md:block p-2 hover:bg-gray-100 rounded-lg">
+          <button
+            type="button"
+            className="hidden md:block p-2 hover:bg-gray-100 rounded-lg cursor-pointer"
+            onClick={() => navigate("/favourite")}
+          >
             <Heart className="w-5 h-5 text-gray-600" />
           </button>
-          <button className="hidden md:block p-2 hover:bg-gray-100 rounded-lg relative">
+          <button
+            type="button"
+            className="hidden md:block p-2 hover:bg-gray-100 rounded-lg relative cursor-pointer"
+          >
             <Bell className="w-5 h-5 text-gray-600" />
             <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
           </button>

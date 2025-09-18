@@ -11,6 +11,7 @@ export type IUserData = {
 };
 
 export type IDoctorDetails = {
+  id: number;
   doctor_profile_id: number;
   about: string;
   experience_years: number;
@@ -31,6 +32,34 @@ export type IDoctorDetails = {
   day: string;
   start_time: string;
   end_time: string;
+  average_rating: string;
+  reviews_count: number;
+};
+
+export type IFavouriteDoctor = {
+  id: number;
+  user_id: number;
+  favouritable_type: string;
+  favouritable_id: number;
+  created_at: Date;
+  updated_at: Date;
+  favouritable: {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    doctor_profile: {
+      id: number;
+      user_id: number;
+      specialist_id: number;
+      hospital_id: number;
+      about: string;
+      experience_years: number;
+      price_per_hour: string;
+      created_at: Date;
+      updated_at: Date;
+    };
+  };
 };
 
 export type ISpecialist = {
