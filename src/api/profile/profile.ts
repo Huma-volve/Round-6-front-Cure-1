@@ -1,4 +1,3 @@
-// profile.ts
 import type { IUserData } from "@/types";
 import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
@@ -52,6 +51,48 @@ export async function updateProfile(data: UpdateProfilePayload) {
   } catch (e) {
     const err = e as AxiosError<{ message?: string }>;
     const msg = err.response?.data?.message || "Failed to update profile";
+    toast.error(msg);
+    throw err;
+  }
+}
+export async function deleteAccount(password: string) {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}delete_account`,
+      { password },
+      {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      }
+    );
+
+    toast.success("delete successfully");
+    return res.data;
+  } catch (e) {
+    const err = e as AxiosError<{ message?: string }>;
+    const msg = err.response?.data?.message || "Failed to delete";
+    toast.error(msg);
+    throw err;
+  }
+}
+export async function logout() {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}profile`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      }
+    );
+
+    toast.success("logout successfully");
+    return res.data;
+  } catch (e) {
+    const err = e as AxiosError<{ message?: string }>;
+    const msg = err.response?.data?.message || "Failed to logout";
     toast.error(msg);
     throw err;
   }
