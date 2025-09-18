@@ -8,7 +8,7 @@ type DoctorCardProps = {
   onBook?: (id: number) => void;
 };
 
-const formatTime = (time: string) => {
+export const formatTime = (time: string) => {
   const [hours, minutes] = time.split(":").map(Number);
   const suffix = hours >= 12 ? "PM" : "AM";
   const formattedHours = ((hours + 11) % 12) + 1; // يحول 13 → 1
@@ -22,7 +22,7 @@ function CardDoctor({ doctor }: DoctorCardProps) {
       key={doctor.doctor_profile_id}
       className="bg-white m-w-[84%] rounded-lg shadow-sm border border-gray-200 p-3 hover:shadow-md transition-shadow"
     >
-      <div className="flex items-start gap-4 mb-4">
+      <div className="flex items-start gap-4 mb-1">
         <img
           src={doctorPhoto}
           alt={doctor.name}

@@ -12,6 +12,8 @@ import ResetPassword from "./pages/auth/components/ResetPassword";
 import DoctorDetails from "./pages/doctorDetails/DoctorDetails";
 import FAQsPage from "./pages/profile/FAQsPage";
 import ProfileScreen from "./pages/profile/ProfilePage";
+import MapSearch from "./pages/MapSearch/MapSearch";
+import ContactUs from "./pages/ContactUs/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +67,14 @@ export const router = createBrowserRouter([
       {
         path: "/faqs",
         element: <FAQsPage />,
+      },
+      {
+        path: "/search-map",
+        element: <MapSearch />,
+      },
+      {
+        path: "/contact-us",
+        element: <ContactUs />,
       },
     ],
   },

@@ -5,8 +5,11 @@ import type { IDoctorDetails, ISpecialist } from "@/types";
 import { fetchDoctorsData } from "@/api/doctors/doctors";
 import { Loader } from "@/components/common/Loader";
 import { fetchSpecialitiesData } from "@/api/specialities/specialities";
+import { useNavigate } from "react-router-dom";
+import GoBackButton from "@/components/common/GoBackButton";
 
-const DoctorBooking = () => {
+const Search = () => {
+  const navigate = useNavigate();
   const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>([]);
   const [selectedGender, setSelectedGender] = useState("");
   const [selectedConsultationType, setSelectedConsultationType] = useState("");
@@ -114,7 +117,7 @@ const DoctorBooking = () => {
             <Filter size={16} />
             <span className="text-sm text-gray-600">Filter</span>
           </button>
-          <ChevronLeft size={20} className="text-gray-400" />
+          <GoBackButton />
         </div>
 
         <div className="flex-1 lg:max-w-md">
@@ -127,7 +130,10 @@ const DoctorBooking = () => {
           />
         </div>
 
-        <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors lg:ml-4">
+        <button
+          onClick={() => navigate("/search-map")}
+          className="flex items-center cursor-pointer gap-2 px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors lg:ml-4"
+        >
           <MapPin size={16} />
           <span className="text-sm text-gray-600">Map</span>
         </button>
@@ -327,4 +333,4 @@ const DoctorBooking = () => {
   );
 };
 
-export default DoctorBooking;
+export default Search;
