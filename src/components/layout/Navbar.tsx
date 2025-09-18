@@ -42,7 +42,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-gray-50 flex flex-col">
+    <div className="bg-gray-50 flex flex-col sticky top-0 z-50">
       {/* Header */}
       <header className="bg-white hidden md:flex shadow-sm px-4 py-3  items-center justify-between relative z-20 ">
         {/* Logo/Menu */}
