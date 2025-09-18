@@ -34,12 +34,12 @@ const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
 
-  const toggleProfile = () => {
-    setIsProfileOpen(!isProfileOpen);
-  };
+  const toggleProfile = () => setIsProfileOpen((v) => !v);
+  const closeProfile = () => setIsProfileOpen(false);
 
-  const closeProfile = () => {
+  const go = (path: string) => {
     setIsProfileOpen(false);
+    navigate(path);
   };
 
   const logout = async () => {
@@ -218,7 +218,7 @@ const Navbar = () => {
                   type="button"
                   title="Settings"
                   className="p-1 cursor-pointer hover:bg-gray-100 rounded"
-                  onClick={() => navigate("/edit-profile")}
+                  onClick={() => go("/edit-profile")}
                 >
                   <Settings className="w-4 h-4 text-gray-600" />
                 </button>
@@ -229,7 +229,7 @@ const Navbar = () => {
                   type="button"
                   title="Payment Method"
                   className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
-                  onClick={() => navigate("/payment-management")}
+                  onClick={() => go("/payment-management")}
                 >
                   <CreditCard className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Payment Method</span>
@@ -240,7 +240,7 @@ const Navbar = () => {
                   type="button"
                   title="Settings"
                   className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
-                  onClick={() => navigate("/settings")}
+                  onClick={() => go("/settings")}
                 >
                   <Settings className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Settings</span>
@@ -251,7 +251,7 @@ const Navbar = () => {
                   type="button"
                   title="Privacy Policy"
                   className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
-                  onClick={() => navigate("/privacy")}
+                  onClick={() => go("/privacy")}
                 >
                   <Shield className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Privacy Policy</span>
