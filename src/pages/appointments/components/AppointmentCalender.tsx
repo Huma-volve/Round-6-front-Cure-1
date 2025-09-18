@@ -6,12 +6,11 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Calendar1Icon, ChevronDown } from "lucide-react";
+import { Calendar1Icon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 
 function AppointmentCalender() {
     const [dates, setDates] = useState<Date[] | undefined>(undefined);
-    console.log(dates);
 
     return (
         <Accordion type="single" collapsible className="absolute right-0 top-0">
@@ -25,7 +24,6 @@ function AppointmentCalender() {
                         <p className="text-xs md:text-sm hidden md:block">
                             Select date
                         </p>
-                        <ChevronDown strokeWidth={1} />
                     </AccordionTrigger>
                 </div>
 

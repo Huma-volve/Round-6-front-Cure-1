@@ -12,6 +12,7 @@ import AppointmentFilterTabs from "./components/AppointmentFilterTabs";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Loader } from "@/components/common/Loader";
 import AppointmentCalender from "./components/AppointmentCalender";
+import NoData from "@/components/common/NoData";
 
 function Appointments() {
     const { userAppointmentsRes } = useLoaderData();
@@ -40,6 +41,8 @@ function Appointments() {
 
                 {isLoading ? (
                     <Loader className="mt-40 mx-auto" size="xl" />
+                ) : userAppointments.length === 0 ? (
+                    <NoData />
                 ) : (
                     <TabsContent
                         value={filterBy || "all"}

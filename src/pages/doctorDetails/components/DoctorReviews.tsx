@@ -18,7 +18,7 @@ type DoctorReviewsProps = {
 
 function DoctorReviews({ doctorId, reviewsCount, rating }: DoctorReviewsProps) {
     const initReviewLink = `${
-        import.meta.env.VITE_BASE_URL_DOCTOR
+        import.meta.env.VITE_BASE_URL
     }doctors/${doctorId}/reviews`;
 
     const [doctorReviews, setDoctorReviews] = useState<IReviewsResponse | null>(
@@ -77,11 +77,13 @@ function DoctorReviews({ doctorId, reviewsCount, rating }: DoctorReviewsProps) {
                                 <ReviewCard review={review} key={review.id} />
                             ))}
                         </div>
-                        <ReviewsPagination
-                            reviewsLinks={doctorReviews.links}
-                            lastPage={doctorReviews.last_page}
-                            onSetReveiwLink={setReviewLink}
-                        />
+                        {doctorReviews.total > 10 && (
+                            <ReviewsPagination
+                                reviewsLinks={doctorReviews.links}
+                                lastPage={doctorReviews.last_page}
+                                onSetReveiwLink={setReviewLink}
+                            />
+                        )}
                     </>
                 ) : doctorReviews && doctorReviews.total === 0 ? (
                     <AlertMsg message="No reviews found" />

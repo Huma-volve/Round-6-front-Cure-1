@@ -4,7 +4,7 @@ import type { IDoctorDetails } from "@/types";
 import type { IAppointmentValues } from "@/types";
 
 // const TOKEN = import.meta.env.VITE_TOKEN_DOCTOR;
-const TOKEN = JSON.stringify(localStorage.getItem("token"));
+const TOKEN = localStorage.getItem("token") ?? "";
 
 // GET DOCTORS DATA
 export const fetchDoctorsData = async (): Promise<IDoctorDetails[]> => {
@@ -33,11 +33,11 @@ export const fetchDoctorsData = async (): Promise<IDoctorDetails[]> => {
 export const getDoctorDetails = async (id: string) => {
     try {
         const response = await axios.get(
-            `${import.meta.env.VITE_BASE_URL_DOCTOR}doctors/${id}`,
+            `${import.meta.env.VITE_BASE_URL}doctors/${id}`,
             {
                 headers: {
-                    "Content-Type": "application/json",
                     Authorization: `Bearer ${TOKEN}`,
+                    "Content-Type": "application/json",
                 },
             }
         );
@@ -68,9 +68,7 @@ export const getDoctorReviews = async (link: string) => {
 export const getAvailableSlots = async (id: string) => {
     try {
         const response = await axios.get(
-            `${
-                import.meta.env.VITE_BASE_URL_DOCTOR
-            }doctors/${id}/available-slots`,
+            `${import.meta.env.VITE_BASE_URL}doctors/${id}/available-slots`,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -89,7 +87,7 @@ export const getAvailableSlots = async (id: string) => {
 export const createDoctorAppointment = async (data: IAppointmentValues) => {
     try {
         const response = await axios.post(
-            `${import.meta.env.VITE_BASE_URL_DOCTOR}appointments`,
+            `${import.meta.env.VITE_BASE_URL}appointments`,
             data,
             {
                 headers: {

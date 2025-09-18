@@ -7,120 +7,119 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 let userOTP = "";
 
 export const handleLogin = async (values: ISignIn) => {
-  try {
-    const res = await axios.post(`${BASE_URL}login`, values);
-
-    if (res.status === 200) {
-      toast.success("Login successful");
-      localStorage.setItem("token", res.data.data.token);
-      return true;
+    try {
+        const res = await axios.post(`${BASE_URL}login`, values);
+        if (res.status === 200) {
+            toast.success("Login successful");
+            localStorage.setItem("token", res.data.data.token);
+            return true;
+        }
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        console.error("Login error:", err);
+        if (err.response?.status === 401) {
+            toast.error("Incorrect email or password");
+            return;
+        }
+        toast.error("Something went wrong");
     }
-  } catch (error) {
-    const err = error as AxiosError<{ message: string }>;
-    console.error("Login error:", err);
-    if (err.response?.status === 401) {
-      toast.error("Incorrect email or password");
-      return;
-    }
-    toast.error("Something went wrong");
-  }
 };
 
 export const handleSignUp = async (values: ISignUp) => {
-  try {
-    const res = await axios.post(`${BASE_URL}register`, {
-      name: values.name,
-      email: values.email,
-      password: values.password,
-      password_confirmation: values.password,
-    });
+    try {
+        const res = await axios.post(`${BASE_URL}register`, {
+            name: values.name,
+            email: values.email,
+            password: values.password,
+            password_confirmation: values.password,
+        });
 
-    if (res.status === 201) {
-      toast.success("Sign up successful");
-      return true;
+        if (res.status === 201) {
+            toast.success("Sign up successful");
+            return true;
+        }
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        console.error("Sign up error:", err);
+        if (err.response?.data.message === "Email is already in use") {
+            toast.error("Email is already registered");
+            return;
+        }
+        toast.error("Something went wrong");
     }
-  } catch (error) {
-    const err = error as AxiosError<{ message: string }>;
-    console.error("Sign up error:", err);
-    if (err.response?.data.message === "Email is already in use") {
-      toast.error("Email is already registered");
-      return;
-    }
-    toast.error("Something went wrong");
-  }
 };
 
 export const handleSendOtp = async (values: { email: string }) => {
-  try {
-    const res = await axios.post(`${BASE_URL}send-reset-otp`, values);
+    try {
+        const res = await axios.post(`${BASE_URL}send-reset-otp`, values);
 
-    if (res.status === 200) {
-      toast.success("Otp sent successfully");
+        if (res.status === 200) {
+            toast.success("Otp sent successfully");
 
-      localStorage.setItem("userEmail", res.data.data.email);
+            localStorage.setItem("userEmail", res.data.data.email);
 
-      const otpNote = res.data.data.note;
-      const otpMatch = otpNote.match(/\{(\d+)\}/);
-      userOTP = otpMatch[1];
-      return true;
+            const otpNote = res.data.data.note;
+            const otpMatch = otpNote.match(/\{(\d+)\}/);
+            userOTP = otpMatch[1];
+            return true;
+        }
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        console.error("Send otp error:", err);
+        if (err.response?.data.message === "Email not found in our records") {
+            toast.error("Email not found");
+            return;
+        }
+        toast.error("Something went wrong");
     }
-  } catch (error) {
-    const err = error as AxiosError<{ message: string }>;
-    console.error("Send otp error:", err);
-    if (err.response?.data.message === "Email not found in our records") {
-      toast.error("Email not found");
-      return;
-    }
-    toast.error("Something went wrong");
-  }
 };
 
 export const handleVerifyOtp = async (otp: string) => {
-  if (otp !== userOTP) {
-    toast.error("Invalid or expired OTP");
-    return;
-  }
-  try {
-    const res = await axios.post(`${BASE_URL}verify-otp`, {
-      email: localStorage.getItem("userEmail"),
-      otp,
-    });
+    if (otp !== userOTP) {
+        toast.error("Invalid or expired OTP");
+        return;
+    }
+    try {
+        const res = await axios.post(`${BASE_URL}verify-otp`, {
+            email: localStorage.getItem("userEmail"),
+            otp,
+        });
 
-    if (res.status === 200) {
-      toast.success("Otp verified successfully");
-      return true;
+        if (res.status === 200) {
+            toast.success("Otp verified successfully");
+            return true;
+        }
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        console.error("Verify otp error:", err);
+        if (err.response?.data.message === "Invalid or expired OTP") {
+            toast.error("Invalid or expired OTP");
+            return;
+        }
+        toast.error("Something went wrong");
     }
-  } catch (error) {
-    const err = error as AxiosError<{ message: string }>;
-    console.error("Verify otp error:", err);
-    if (err.response?.data.message === "Invalid or expired OTP") {
-      toast.error("Invalid or expired OTP");
-      return;
-    }
-    toast.error("Something went wrong");
-  }
 };
 
 export const handleResetPassword = async (values: {
-  password: string;
-  password_confirmation: string;
+    password: string;
+    password_confirmation: string;
 }) => {
-  try {
-    const res = await axios.post(`${BASE_URL}reset-password`, {
-      email: localStorage.getItem("userEmail"),
-      otp: userOTP,
-      password: values.password,
-      password_confirmation: values.password_confirmation,
-    });
+    try {
+        const res = await axios.post(`${BASE_URL}reset-password`, {
+            email: localStorage.getItem("userEmail"),
+            otp: userOTP,
+            password: values.password,
+            password_confirmation: values.password_confirmation,
+        });
 
-    if (res.status === 200) {
-      toast.success("Password reset successfully");
-      localStorage.removeItem("userEmail");
-      return true;
+        if (res.status === 200) {
+            toast.success("Password reset successfully");
+            localStorage.removeItem("userEmail");
+            return true;
+        }
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        console.error("Reset password error:", err);
+        toast.error("Something went wrong");
     }
-  } catch (error) {
-    const err = error as AxiosError<{ message: string }>;
-    console.error("Reset password error:", err);
-    toast.error("Something went wrong");
-  }
 };

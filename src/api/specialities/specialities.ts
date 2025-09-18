@@ -32,7 +32,7 @@ export const fetchSpecialitiesData = async (): Promise<ISpecialist[]> => {
 export const getSpeciality = async (id: number) => {
     try {
         const response = await axios.get(
-            `${import.meta.env.VITE_BASE_URL_DOCTOR}specialities/${id}`,
+            `${import.meta.env.VITE_BASE_URL}specialities/${id}`,
             {
                 headers: {
                     "Content-Type": "application/json",

@@ -18,12 +18,21 @@ import {
     Favourite,
     DoctorDetails,
     Appointments,
+    Review,
+    EditProfilePage,
+    SettingsPage,
+    PasswordManagementPage,
+    PaymentMethodPage,
+    PaymentListPage,
+    AddNewCardPage,
     ProtectedRoute,
+    NotFound,
 } from "./pages/index";
 import { loader as doctorDetailsLoader } from "./pages/doctorDetails/DoctorDetails";
 import { loader as appointmentsLoader } from "./pages/appointments/Appointments";
 
 export const router = createBrowserRouter([
+    { path: "*", element: <NotFound /> },
     {
         path: "/get-start",
         element: <GetStart />,
@@ -69,6 +78,16 @@ export const router = createBrowserRouter([
                 element: <Search />,
             },
             {
+                path: "/doctors/:doctorId",
+                element: <DoctorDetails />,
+                loader: doctorDetailsLoader,
+            },
+            {
+                path: "/appointments",
+                element: <Appointments />,
+                loader: appointmentsLoader,
+            },
+            {
                 path: "/profile",
                 element: <ProfileScreen />,
             },
@@ -85,18 +104,36 @@ export const router = createBrowserRouter([
                 element: <Notifications />,
             },
             {
+                path: "/doctor/:id/review",
+                element: <Review />,
+            },
+            {
+                path: "/edit-profile",
+                element: <EditProfilePage />,
+            },
+            {
+                path: "/settings",
+                element: <SettingsPage />,
+            },
+            {
+                path: "/password-management",
+                element: <PasswordManagementPage />,
+            },
+            {
+                path: "/payment-management",
+                element: <PaymentMethodPage />,
+            },
+            {
+                path: "/payment-list",
+                element: <PaymentListPage />,
+            },
+            {
+                path: "/add-card",
+                element: <AddNewCardPage />,
+            },
+            {
                 path: "/favourite",
                 element: <Favourite />,
-            },
-            {
-                path: "/doctors/:doctorId",
-                element: <DoctorDetails />,
-                loader: doctorDetailsLoader,
-            },
-            {
-                path: "/appointments",
-                element: <Appointments />,
-                loader: appointmentsLoader,
             },
         ],
     },

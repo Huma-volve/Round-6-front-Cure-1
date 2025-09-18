@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { formatDate } from "date-fns";
 
 import ScheduleLabel from "@/components/common/ScheduleLabel";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { getInitials } from "@/lib/utils";
+import type { ISpeciality, IAppointment } from "@/types";
+import doctorPlaceholderImg from "@/assets/images/doctor-placeholder.jpeg";
+import { Pin } from "lucide-react";
+import { getSpeciality } from "@/api/specialities/specialities";
 import {
     Card,
     CardContent,
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card";
-import { getInitials } from "@/lib/utils";
-import type { ISpeciality, IAppointment } from "@/types";
-import doctorPlaceholderImg from "@/assets/images/doctor-placeholder.jpeg";
-import { Pin } from "lucide-react";
-import { getSpeciality } from "@/api/specialities/specialities";
+} from "@/components/ui/Card";
 
 type AppointmentCardProps = {
     appointment: IAppointment;
@@ -25,6 +26,7 @@ function AppointmentCard({ appointment }: AppointmentCardProps) {
     const { date, time, doctor, status } = appointment;
     const [speciality, setSpeciality] = useState<ISpeciality | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchSpeciality() {
@@ -94,7 +96,12 @@ function AppointmentCard({ appointment }: AppointmentCardProps) {
                 <Button variant="outline" className="flex-1">
                     Cancel
                 </Button>
-                <Button className="flex-1">Reschedule</Button>
+                <Button
+                    className="flex-1"
+                    onClick={() => navigate(`/doctors/${doctor.id}`)}
+                >
+                    Reschedule
+                </Button>
             </CardFooter>
         </Card>
     );
