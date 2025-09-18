@@ -58,7 +58,7 @@ export default function ProfileScreen() {
     () => [
       { id: "notifications", label: "Notification", icon: Bell, type: "toggle", enabled: true },
       { id: "payment", label: "Payment Method", icon: CreditCard, type: "link", href: "/payment-management" },
-      { id: "favorites", label: "Favorite", icon: Heart, type: "link", href: "/favorites" },
+      { id: "favorites", label: "Favorite", icon: Heart, type: "link", href: "/favourite" },
       { id: "settings", label: "Settings", icon: SettingsIcon, type: "link", href: "/settings" },
       { id: "faqs", label: "FAQs", icon: HelpCircle, type: "link", href: "/faqs" },
       { id: "privacy", label: "Privacy Policy", icon: Shield, type: "link", href: "/privacy" },

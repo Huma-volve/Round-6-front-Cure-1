@@ -9,7 +9,7 @@ import {
     DialogFooter,
 } from "@/components/ui/dialog";
 import { useNavigate, useParams } from "react-router-dom";
-import { doctorReview } from "@/api/doctors/doctors";
+import { getDoctorReviews } from "@/api/doctors/doctors";
 
 export default function ReviewPage() {
     const [rating, setRating] = React.useState<number>(1);

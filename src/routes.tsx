@@ -22,24 +22,9 @@ import PasswordManagementPage from "./pages/profile/PasswordManagementPage";
 import PaymentMethodPage from "./pages/profile/PaymentMethodPage";
 import PaymentListPage from "./pages/profile/PaymentListPage";
 import AddNewCardPage from "./pages/profile/AddNewCardPage";
-import {
-  Home,
-  Search,
-  GetStart,
-  GetStart2,
-  SignUp,
-  SignIn,
-  ForgetPassword,
-  VerifyOTP,
-  ResetPassword,
-  FAQsPage,
-  ProfileScreen,
-  PrivacyPage,
-  Notifications,
-  Favourite,
-  DoctorDetails,
-} from "./pages/index";
+
 import { loader as doctorDetailsLoader } from "./pages/doctorDetails/DoctorDetails";
+import { Favourite } from "./pages";
 
 export const router = createBrowserRouter([
   {
