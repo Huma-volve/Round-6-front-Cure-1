@@ -1,22 +1,32 @@
-import { useState } from "react";
+import { logout } from "@/api/profile/profile";
 import {
-  Search,
-  Menu,
-  Heart,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Bell,
-  Home,
   Calendar,
-  User,
+  ChevronRight,
   CreditCard,
+  Heart,
+  Home,
+  LogOut,
+  Menu,
+  Search,
   Settings,
   Shield,
-  LogOut,
-  ChevronRight,
+  User,
 } from "lucide-react";
-import CureIcon from "../common/CureIcon";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CureIcon from "../common/CureIcon";
 
 const Navbar = () => {
+  const [logoutOpen, setLogoutOpen] = React.useState(false);
   const navigate = useNavigate();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
@@ -29,18 +39,26 @@ const Navbar = () => {
     setIsProfileOpen(false);
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      localStorage.removeItem("token");
+      navigate("/sign-in", { replace: true });
+    }
+  };
+
   return (
     <div className="bg-gray-50 flex flex-col">
-      {/* Header */}
       <header className="bg-white hidden md:flex shadow-sm px-4 py-3  items-center justify-between relative z-20 ">
-        {/* Logo/Menu */}
         <div className="flex items-center ml-10">
           <div className="w-8 h-8  rounded-lg flex items-center justify-center">
             <CureIcon color="primary" />
           </div>
         </div>
 
-        {/* Search Bar - Hidden on mobile */}
         <div className="hidden md:flex flex-1 max-w-md mx-8">
           <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -52,14 +70,11 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Right Side Icons */}
         <div className="flex items-center space-x-4 mr-10">
-          {/* Mobile Menu */}
           <button type="button" title="Menu" className="md:hidden p-2">
             <Menu className="w-5 h-5 text-gray-600" />
           </button>
 
-          {/* Desktop Icons */}
           <button
             title="Favourite"
             type="button"
@@ -94,7 +109,6 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Welcome Section - Mobile */}
       <div className="md:hidden bg-white px-4 py-3 border-b">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -146,10 +160,7 @@ const Navbar = () => {
 
       {isProfileOpen && (
         <>
-          <div
-            className="fixed inset-0  bg-opacity-50 z-30"
-            onClick={closeProfile}
-          ></div>
+          <div className="fixed inset-0 bg-black/40 z-30" onClick={closeProfile}></div>
           <div className="fixed top-16 right-4 w-80 bg-[#F5F6F7] rounded-lg shadow-xl z-40 border">
             <div className="p-4">
               <div className="flex items-center space-x-3 mb-4">
@@ -170,6 +181,7 @@ const Navbar = () => {
                   type="button"
                   title="Settings"
                   className="p-1 cursor-pointer hover:bg-gray-100 rounded"
+                  onClick={() => navigate("/edit-profile")}
                 >
                   <Settings className="w-4 h-4 text-gray-600" />
                 </button>
@@ -180,6 +192,7 @@ const Navbar = () => {
                   type="button"
                   title="Payment Method"
                   className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                  onClick={() => navigate("/payment-management")}
                 >
                   <CreditCard className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Payment Method</span>
@@ -190,6 +203,7 @@ const Navbar = () => {
                   type="button"
                   title="Settings"
                   className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                  onClick={() => navigate("/settings")}
                 >
                   <Settings className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Settings</span>
@@ -200,6 +214,7 @@ const Navbar = () => {
                   type="button"
                   title="Privacy Policy"
                   className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                  onClick={() => navigate("/privacy")}
                 >
                   <Shield className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Privacy Policy</span>
@@ -210,6 +225,10 @@ const Navbar = () => {
                   type="button"
                   title="Log out"
                   className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-red-50 rounded-lg"
+                  onClick={() => {
+                    setIsProfileOpen(false);
+                    setLogoutOpen(true);
+                  }}
                 >
                   <LogOut className="w-5 h-5 text-red-600" />
                   <span className="flex-1 text-red-600">Log out</span>
@@ -220,16 +239,14 @@ const Navbar = () => {
         </>
       )}
 
-      {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-4 py-2 md:hidden z-50">
         <div className="flex justify-around">
           <button
             type="button"
             title="Home"
             onClick={() => setActiveTab("home")}
-            className={`flex flex-col items-center py-2 px-4 ${
-              activeTab === "home" ? "text-blue-600" : "text-gray-600"
-            }`}
+            className={`flex flex-col items-center py-2 px-4 ${activeTab === "home" ? "text-blue-600" : "text-gray-600"
+              }`}
           >
             <Home className="w-5 h-5 mb-1" />
             <span className="text-xs">Home</span>
@@ -239,9 +256,8 @@ const Navbar = () => {
             type="button"
             title="Booking"
             onClick={() => setActiveTab("booking")}
-            className={`flex flex-col items-center py-2 px-4 ${
-              activeTab === "booking" ? "text-blue-600" : "text-gray-600"
-            }`}
+            className={`flex flex-col items-center py-2 px-4 ${activeTab === "booking" ? "text-blue-600" : "text-gray-600"
+              }`}
           >
             <Calendar className="w-5 h-5 mb-1" />
             <span className="text-xs">Booking</span>
@@ -251,15 +267,51 @@ const Navbar = () => {
             type="button"
             title="Profile"
             onClick={() => setActiveTab("profile")}
-            className={`flex flex-col items-center py-2 px-4 ${
-              activeTab === "profile" ? "text-blue-600" : "text-gray-600"
-            }`}
+            className={`flex flex-col items-center py-2 px-4 ${activeTab === "profile" ? "text-blue-600" : "text-gray-600"
+              }`}
           >
             <User className="w-5 h-5 mb-1" />
             <span className="text-xs">Profile</span>
           </button>
         </div>
       </nav>
+
+      <Dialog open={logoutOpen} onOpenChange={setLogoutOpen}>
+        <DialogContent className="rounded-2xl p-0 sm:max-w-md">
+          <DialogHeader className="px-4 pt-4 pb-2 sm:px-6">
+            <DialogTitle className="text-center text-lg font-semibold">
+              Logout
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="mx-4 sm:mx-6 h-px bg-zinc-200" />
+
+          <DialogDescription className="px-4 py-4 text-center text-[15px] text-zinc-600 sm:px-6">
+            Are you sure you want to log out?
+          </DialogDescription>
+
+          <div className="px-4 pb-4 sm:px-6">
+            <div className="grid grid-cols-2 gap-3">
+              <DialogClose asChild>
+                <button
+                  type="button"
+                  className="w-full rounded-xl bg-zinc-200 px-4 py-3 text-sm font-medium text-zinc-800 hover:bg-zinc-300"
+                >
+                  Cancel
+                </button>
+              </DialogClose>
+
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700"
+              >
+                Yes, Logout
+              </button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

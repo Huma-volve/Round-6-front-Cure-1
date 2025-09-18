@@ -78,6 +78,7 @@ export async function deleteAccount(password: string) {
 }
 export async function logout() {
   try {
+    const TOKEN = localStorage.getItem("token");
     const res = await axios.post(
       `${BASE_URL}profile`,
       {},

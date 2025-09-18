@@ -43,10 +43,8 @@ export default function ProfileScreen() {
   const handleLogout = async () => {
     try {
       await logout();
-      toast.success("Logged out successfully");
     } catch (e) {
       console.error(e);
-      toast.error("Failed to log out. Clearing session locally.");
     } finally {
       localStorage.removeItem("token");
       navigate("/sign-in", { replace: true });
