@@ -9,9 +9,12 @@ export default function SettingsRow({ item, onToggle }: Props) {
     const Icon = item.icon;
     const isDanger = item.tone === "danger";
     const nav = useNavigate();
+
     return (
-        <button
-            className="group w-full text-left"
+        <div
+            role="button"
+            tabIndex={0}
+            className="group w-full text-left cursor-pointer"
             onClick={() => {
                 if (item.type === "toggle") return;
                 if (item.onClick) item.onClick();
@@ -21,12 +24,15 @@ export default function SettingsRow({ item, onToggle }: Props) {
                 <div className="flex items-center gap-3 min-w-0">
                     <div
                         className={`flex h-10 w-10 items-center justify-center
-            ${isDanger ? "text-rose-500" : "text-zinc-700"}`}
+                        ${isDanger ? "text-rose-500" : "text-zinc-700"}`}
                     >
                         <Icon className="h-5 w-5" />
                     </div>
                     <div className="min-w-0">
-                        <div className={`text-sm sm:text-base font-medium ${isDanger ? "text-rose-600" : "text-zinc-800"}`}>
+                        <div
+                            className={`text-sm sm:text-base font-medium ${isDanger ? "text-rose-600" : "text-zinc-800"
+                                }`}
+                        >
                             {item.label}
                         </div>
                     </div>
@@ -35,9 +41,12 @@ export default function SettingsRow({ item, onToggle }: Props) {
                 {item.type === "toggle" ? (
                     <Toggle checked={!!item.enabled} onChange={(v) => onToggle(item.id, v)} />
                 ) : (
-                    <ChevronRight className="h-5 w-5 text-zinc-400 group-hover:text-zinc-600" onClick={() => nav(`${item.href}`)} />
+                    <ChevronRight
+                        className="h-5 w-5 text-zinc-400 group-hover:text-zinc-600"
+                        onClick={() => nav(`${item.href}`)}
+                    />
                 )}
             </div>
-        </button>
+        </div>
     );
 }

@@ -1,21 +1,39 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import Layout from "./components/layout/Layout";
-import Home from "./pages/home/Home";
-import Search from "./pages/Search/Search";
-import GetStart from "./pages/auth/components/GetStart1";
-import GetStart2 from "./pages/auth/components/GetStart2";
-import SignUp from "./pages/auth/components/SignUp";
-import SignIn from "./pages/auth/components/SignIn";
-import ForgetPassword from "./pages/auth/components/ForgetPassword";
-import VerifyOTP from "./pages/auth/components/VerifyOTP";
-import ResetPassword from "./pages/auth/components/ResetPassword";
-import DoctorDetails from "./pages/doctorDetails/DoctorDetails";
-import FAQsPage from "./pages/profile/FAQsPage";
-import ProfileScreen from "./pages/profile/ProfilePage";
-import MapSearch from "./pages/MapSearch/MapSearch";
-import ContactUs from "./pages/ContactUs/ContactUs";
+import {
+  Home,
+  Search,
+  GetStart,
+  GetStart2,
+  SignUp,
+  SignIn,
+  ForgetPassword,
+  VerifyOTP,
+  ResetPassword,
+  FAQsPage,
+  ProfileScreen,
+  PrivacyPage,
+  Notifications,
+  Favourite,
+  DoctorDetails,
+  Appointments,
+  Review,
+  EditProfilePage,
+  SettingsPage,
+  PasswordManagementPage,
+  PaymentMethodPage,
+  PaymentListPage,
+  AddNewCardPage,
+  ProtectedRoute,
+  NotFound,
+  MapSearch,
+} from "./pages/index";
+import { loader as doctorDetailsLoader } from "./pages/doctorDetails/DoctorDetails";
+import { loader as appointmentsLoader } from "./pages/appointments/Appointments";
 
 export const router = createBrowserRouter([
+  { path: "*", element: <NotFound /> },
   {
     path: "/get-start",
     element: <GetStart />,
@@ -46,7 +64,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "/",
@@ -57,8 +79,14 @@ export const router = createBrowserRouter([
         element: <Search />,
       },
       {
-        path: "/doctors/:id",
+        path: "/doctors/:doctorId",
         element: <DoctorDetails />,
+        loader: doctorDetailsLoader,
+      },
+      {
+        path: "/appointments",
+        element: <Appointments />,
+        loader: appointmentsLoader,
       },
       {
         path: "/profile",
@@ -69,12 +97,48 @@ export const router = createBrowserRouter([
         element: <FAQsPage />,
       },
       {
-        path: "/search-map",
-        element: <MapSearch />,
+        path: "/privacy",
+        element: <PrivacyPage />,
       },
       {
-        path: "/contact-us",
-        element: <ContactUs />,
+        path: "/notifications",
+        element: <Notifications />,
+      },
+      {
+        path: "/doctor/:id/review",
+        element: <Review />,
+      },
+      {
+        path: "/edit-profile",
+        element: <EditProfilePage />,
+      },
+      {
+        path: "/settings",
+        element: <SettingsPage />,
+      },
+      {
+        path: "/password-management",
+        element: <PasswordManagementPage />,
+      },
+      {
+        path: "/payment-management",
+        element: <PaymentMethodPage />,
+      },
+      {
+        path: "/payment-list",
+        element: <PaymentListPage />,
+      },
+      {
+        path: "/add-card",
+        element: <AddNewCardPage />,
+      },
+      {
+        path: "/favourite",
+        element: <Favourite />,
+      },
+      {
+        path: "/search-map",
+        element: <MapSearch />,
       },
     ],
   },

@@ -6,7 +6,7 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 w-full max-w-[1240px] mx-auto p-4">
+      <main className="flex-1 w-full max-w-[1240px] mx-auto p-4 md:py-6 lg:py-10 min-h-screen overflow-hidden">
         <Outlet />
       </main>
       <Footer />

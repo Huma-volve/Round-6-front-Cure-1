@@ -1,44 +1,65 @@
-import { useState } from "react";
 import {
-  Search,
-  Menu,
-  Heart,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Bell,
-  Home,
   Calendar,
-  User,
+  ChevronRight,
   CreditCard,
+  Heart,
+  Home,
+  LogOut,
+  Menu,
+  Search,
   Settings,
   Shield,
-  LogOut,
-  ChevronRight,
+  User,
 } from "lucide-react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CureIcon from "../common/CureIcon";
+import { handleLogout } from "@/api/auth/auth";
+import { useUserContext } from "@/context/user-context";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
+  const [logoutOpen, setLogoutOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const { user, setUser } = useUserContext();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
 
-  const toggleProfile = () => {
-    setIsProfileOpen(!isProfileOpen);
+  const toggleProfile = () => setIsProfileOpen((v) => !v);
+  const closeProfile = () => setIsProfileOpen(false);
+
+  const go = (path: string) => {
+    setIsProfileOpen(false);
+    navigate(path);
   };
 
-  const closeProfile = () => {
-    setIsProfileOpen(false);
+  const logout = async () => {
+    const res = await handleLogout();
+    if (res) {
+      setUser(null);
+      navigate("/sign-in");
+    }
   };
 
   return (
-    <div className=" bg-gray-50 flex flex-col">
+    <div className="bg-gray-50 flex flex-col sticky top-0 z-50">
       {/* Header */}
       <header className="bg-white hidden md:flex shadow-sm px-4 py-3  items-center justify-between relative z-20 ">
-        {/* Logo/Menu */}
         <div className="flex items-center ml-10">
           <div className="w-8 h-8  rounded-lg flex items-center justify-center">
             <CureIcon color="primary" />
           </div>
         </div>
 
-        {/* Search Bar - Hidden on mobile */}
         <div className="hidden md:flex flex-1 max-w-md mx-8">
           <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -50,60 +71,82 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Right Side Icons */}
         <div className="flex items-center space-x-4 mr-10">
           {/* Mobile Menu */}
-          <button type="button" title="Menu" className="md:hidden p-2">
+          <button
+            type="button"
+            title="Menu"
+            className="md:hidden p-2 cursor-pointer"
+          >
             <Menu className="w-5 h-5 text-gray-600" />
           </button>
 
           <button
+            title="Favourite"
             type="button"
-            title="Heart"
-            className="hidden md:block p-2 hover:bg-gray-100 rounded-lg"
+            className="hidden md:block p-2 hover:bg-gray-100 rounded-lg cursor-pointer"
+            onClick={() => navigate("/favourite")}
           >
             <Heart className="w-5 h-5 text-gray-600" />
           </button>
           <button
+            title="Notification"
             type="button"
-            title="Bell"
-            className="hidden md:block p-2 hover:bg-gray-100 rounded-lg relative"
+            className="hidden md:block p-2 hover:bg-gray-100 rounded-lg relative cursor-pointer"
           >
             <Bell className="w-5 h-5 text-gray-600" />
             <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
           </button>
 
+          {/* Profile Photo */}
           <button
-            type="button"
             title="Profile"
+            type="button"
             onClick={toggleProfile}
-            className="relative"
+            className="relative cursor-pointer"
           >
             <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200">
-              <img
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
+              {user?.avatar ? (
+                <img
+                  src={`${user?.avatar}`}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                  onError={() => {
+                    user.avatar = "https://github.com/shadcn.png";
+                  }}
+                />
+              ) : (
+                <Avatar className="w-full h-full">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                </Avatar>
+              )}
             </div>
           </button>
         </div>
       </header>
 
-      {/* Welcome Section - Mobile */}
       <div className="md:hidden bg-white px-4 py-3 border-b">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-full overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
+              {user?.avatar ? (
+                <img
+                  src={`${user?.avatar}`}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                  onError={() => {
+                    user.avatar = "https://github.com/shadcn.png";
+                  }}
+                />
+              ) : (
+                <Avatar className="w-full h-full">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                </Avatar>
+              )}
             </div>
             <div>
               <h2 className="text-sm md:text-xl font-semibold text-gray-900">
-                Welcome back, Seif
+                Welcome back, {user?.name}
               </h2>
               <p className="text-sm text-gray-500 flex items-center">
                 <span>📍 129 El-Nasr Street, Cairo</span>
@@ -112,16 +155,19 @@ const Navbar = () => {
           </div>
           <div className="flex space-x-2">
             <button
+              title="Favourite"
               type="button"
-              title="Heart"
-              className="p-2 hover:bg-gray-100 rounded-lg"
+              className="p-2 hover:bg-gray-100 rounded-lg cursor-pointer"
             >
-              <Heart className="w-5 h-5 text-gray-600" />
+              <Heart
+                className="w-5 h-5 text-gray-600"
+                onClick={() => navigate("/favourite")}
+              />
             </button>
             <button
+              title="Notification"
               type="button"
-              title="Bell"
-              className="p-2 hover:bg-gray-100 rounded-lg relative"
+              className="p-2 hover:bg-gray-100 rounded-lg relative cursor-pointer"
             >
               <Bell className="w-5 h-5 text-gray-600" />
               <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
@@ -143,29 +189,40 @@ const Navbar = () => {
       {isProfileOpen && (
         <>
           <div
-            className="fixed inset-0  bg-opacity-50 z-30"
+            className="fixed inset-0 bg-black/40 z-30"
             onClick={closeProfile}
           ></div>
           <div className="fixed top-16 right-4 w-80 bg-[#F5F6F7] rounded-lg shadow-xl z-40 border">
             <div className="p-4">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
+                  {user?.avatar ? (
+                    <img
+                      src={`${user?.avatar}`}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                      onError={() => {
+                        user.avatar = "https://github.com/shadcn.png";
+                      }}
+                    />
+                  ) : (
+                    <Avatar className="w-full h-full">
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                    </Avatar>
+                  )}
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900">Seif Mohamed</h3>
+                  <h3 className="font-semibold text-gray-900">{user?.name}</h3>
                   <p className="text-sm text-gray-500">
                     📍 129 El-Nasr Street, Cairo
                   </p>
+                  <p className="text-sm text-gray-500">{user?.email}</p>
                 </div>
                 <button
                   type="button"
                   title="Settings"
                   className="p-1 cursor-pointer hover:bg-gray-100 rounded"
+                  onClick={() => go("/edit-profile")}
                 >
                   <Settings className="w-4 h-4 text-gray-600" />
                 </button>
@@ -176,6 +233,7 @@ const Navbar = () => {
                   type="button"
                   title="Payment Method"
                   className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                  onClick={() => go("/payment-management")}
                 >
                   <CreditCard className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Payment Method</span>
@@ -186,6 +244,7 @@ const Navbar = () => {
                   type="button"
                   title="Settings"
                   className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                  onClick={() => go("/settings")}
                 >
                   <Settings className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Settings</span>
@@ -196,6 +255,7 @@ const Navbar = () => {
                   type="button"
                   title="Privacy Policy"
                   className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                  onClick={() => go("/privacy")}
                 >
                   <Shield className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Privacy Policy</span>
@@ -206,6 +266,10 @@ const Navbar = () => {
                   type="button"
                   title="Log out"
                   className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-red-50 rounded-lg"
+                  onClick={() => {
+                    setIsProfileOpen(false);
+                    setLogoutOpen(true);
+                  }}
                 >
                   <LogOut className="w-5 h-5 text-red-600" />
                   <span className="flex-1 text-red-600">Log out</span>
@@ -216,14 +280,13 @@ const Navbar = () => {
         </>
       )}
 
-      {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-4 py-2 md:hidden z-50">
         <div className="flex justify-around">
           <button
-            type="button"
             title="Home"
+            type="button"
             onClick={() => setActiveTab("home")}
-            className={`flex flex-col items-center py-2 px-4 ${
+            className={`flex flex-col items-center py-2 px-4 cursor-pointer ${
               activeTab === "home" ? "text-blue-600" : "text-gray-600"
             }`}
           >
@@ -232,10 +295,10 @@ const Navbar = () => {
           </button>
 
           <button
-            type="button"
             title="Booking"
+            type="button"
             onClick={() => setActiveTab("booking")}
-            className={`flex flex-col items-center py-2 px-4 ${
+            className={`flex flex-col items-center py-2 px-4 cursor-pointer ${
               activeTab === "booking" ? "text-blue-600" : "text-gray-600"
             }`}
           >
@@ -244,10 +307,10 @@ const Navbar = () => {
           </button>
 
           <button
-            type="button"
             title="Profile"
+            type="button"
             onClick={() => setActiveTab("profile")}
-            className={`flex flex-col items-center py-2 px-4 ${
+            className={`flex flex-col items-center py-2 px-4 cursor-pointer ${
               activeTab === "profile" ? "text-blue-600" : "text-gray-600"
             }`}
           >
@@ -256,6 +319,43 @@ const Navbar = () => {
           </button>
         </div>
       </nav>
+
+      <Dialog open={logoutOpen} onOpenChange={setLogoutOpen}>
+        <DialogContent className="rounded-2xl p-0 sm:max-w-md">
+          <DialogHeader className="px-4 pt-4 pb-2 sm:px-6">
+            <DialogTitle className="text-center text-lg font-semibold">
+              Logout
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="mx-4 sm:mx-6 h-px bg-zinc-200" />
+
+          <DialogDescription className="px-4 py-4 text-center text-[15px] text-zinc-600 sm:px-6">
+            Are you sure you want to log out?
+          </DialogDescription>
+
+          <div className="px-4 pb-4 sm:px-6">
+            <div className="grid grid-cols-2 gap-3">
+              <DialogClose asChild>
+                <button
+                  type="button"
+                  className="w-full rounded-xl bg-zinc-200 px-4 py-3 text-sm font-medium text-zinc-800 hover:bg-zinc-300"
+                >
+                  Cancel
+                </button>
+              </DialogClose>
+
+              <button
+                type="button"
+                onClick={logout}
+                className="w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700"
+              >
+                Yes, Logout
+              </button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
