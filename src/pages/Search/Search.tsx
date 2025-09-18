@@ -6,8 +6,11 @@ import { fetchDoctorsData } from "@/api/doctors/doctors";
 import { Loader } from "@/components/common/Loader";
 import { fetchSpecialitiesData } from "@/api/specialities/specialities";
 import { useFavourites } from "@/hooks/useFavourite";
+import GoBackButton from "@/components/common/GoBackButton";
+import { useNavigate } from "react-router-dom";
 
-const DoctorBooking = () => {
+const Search = () => {
+  const navigate = useNavigate();
   const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>([]);
   const [selectedGender, setSelectedGender] = useState("");
   const [selectedConsultationType, setSelectedConsultationType] = useState("");
@@ -73,11 +76,11 @@ const DoctorBooking = () => {
     .sort((a, b) => {
       switch (sortBy) {
         case "Price low to high":
-          return +a.price_per_hour - +b.price_per_hour;
+          return Number(a.price_per_hour ?? 0) - Number(b.price_per_hour ?? 0);
         case "Price high to low":
-          return +b.price_per_hour - +a.price_per_hour;
+          return Number(b.price_per_hour ?? 0) - Number(a.price_per_hour ?? 0);
         case "Highest rated":
-          return (b.average_rating ?? 0) - (a.average_rating ?? 0);
+          return Number(b.average_rating ?? 0) - Number(a.average_rating ?? 0);
         default:
           return 0;
       }
@@ -116,7 +119,7 @@ const DoctorBooking = () => {
             <Filter size={16} />
             <span className="text-sm text-gray-600">Filter</span>
           </button>
-          <ChevronLeft size={20} className="text-gray-400" />
+          <GoBackButton />
         </div>
 
         <div className="flex-1 lg:max-w-md">
@@ -129,7 +132,10 @@ const DoctorBooking = () => {
           />
         </div>
 
-        <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors lg:ml-4">
+        <button
+          onClick={() => navigate("/search-map")}
+          className="flex items-center cursor-pointer gap-2 px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors lg:ml-4"
+        >
           <MapPin size={16} />
           <span className="text-sm text-gray-600">Map</span>
         </button>
@@ -343,4 +349,4 @@ const DoctorBooking = () => {
   );
 };
 
-export default DoctorBooking;
+export default Search;

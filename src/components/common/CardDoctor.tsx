@@ -10,7 +10,7 @@ type DoctorCardProps = {
   onToggleFavourite?: (id: number) => void;
 };
 
-const formatTime = (time: string) => {
+export const formatTime = (time: string) => {
   const [hours, minutes] = time?.split(":")?.map(Number) ?? [];
   const suffix = hours >= 12 ? "PM" : "AM";
   const formattedHours = ((hours + 11) % 12) + 1; // يحول 13 → 1
