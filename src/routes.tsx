@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Layout from "./components/layout/Layout";
-import { DoctorDetails } from "./pages/index";
+import { Appointments, DoctorDetails } from "./pages/index";
 import { loader as doctorDetailsLoader } from "./pages/doctorDetails/DoctorDetails";
+import { loader as appointmentsLoader } from "./pages/appointments/Appointments";
 
 export const router = createBrowserRouter([
     {
@@ -13,6 +14,11 @@ export const router = createBrowserRouter([
                 path: "/doctors/:doctorId",
                 element: <DoctorDetails />,
                 loader: doctorDetailsLoader,
+            },
+            {
+                path: "/appointments",
+                element: <Appointments />,
+                loader: appointmentsLoader,
             },
         ],
     },

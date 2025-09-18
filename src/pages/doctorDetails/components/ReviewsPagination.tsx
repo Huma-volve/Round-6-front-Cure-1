@@ -49,11 +49,11 @@ function ReviewsPagination({
                     </PaginationItem>
                 ))}
 
-                {reviewsLinks.at(-1).url && (
+                {reviewsLinks.at(-1)!.url && (
                     <PaginationItem>
                         <PaginationNext
                             onClick={() =>
-                                onSetReveiwLink(reviewsLinks?.at(-1).url!)
+                                onSetReveiwLink(reviewsLinks.at(-1)!.url!)
                             }
                             className="text-base font-medium cursor-pointer"
                         />

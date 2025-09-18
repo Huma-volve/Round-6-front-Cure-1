@@ -10,7 +10,7 @@ import {
 import DoctorHeader from "./DoctorHeader";
 import type { IDoctorDetails } from "@/types";
 import { Button } from "@/components/ui/button";
-import ScheduleLabel from "./ScheduleLabel";
+import ScheduleLabel from "../../../components/common/ScheduleLabel";
 import DoctorPricing from "./DoctorPricing";
 import PaymentMethods from "./PaymentMethods";
 
@@ -49,7 +49,7 @@ function PaymentDialog({
                     </SheetTitle>
                 </SheetHeader>
 
-                <div className="flex flex-1 flex-col gap-6 px-4 pb-4">
+                <div className="flex flex-1 flex-col gap-4 px-4 pb-4">
                     <div className="flex items-center gap-6">
                         <ScheduleLabel>{schedule}</ScheduleLabel>
                         <SheetClose asChild>

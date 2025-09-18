@@ -7,7 +7,7 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import type { IAppointmentSlot, IAppointmentValues } from "@/types";
-import { Calendar1Icon, ChevronDownIcon } from "lucide-react";
+import { Calendar1Icon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import AlertMsg from "@/components/common/AlertMsg";
 
@@ -49,7 +49,6 @@ function AppointmentDate({ formik, availableSlots }: AppointmentDateProps) {
                                           ).toLocaleDateString()
                                         : "Select date"}
                                 </p>
-                                <ChevronDownIcon className="pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 ml-auto text-primary-200" />
                             </AccordionTrigger>
                         </div>
                     </div>
