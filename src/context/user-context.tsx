@@ -39,7 +39,6 @@ export const UserContextProvider = ({
       if (res.status === 200) {
         setUser(res.data.data.user);
       }
-      console.log(user);
     } catch (error) {
       console.error("Get user error:", error);
     }
