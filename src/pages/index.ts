@@ -13,3 +13,5 @@ export { default as ProfileScreen } from "./profile/ProfilePage";
 export { default as PrivacyPage } from "./profile/PrivacyPolicyPage";
 export { default as Notifications } from "./notification/Notifications";
 export { default as Favourite } from "./favourite/Favourite";
+export { default as Appointments } from "./appointments/Appointments";
+export { default as ProtectedRoute } from "./ProtectedRoute";

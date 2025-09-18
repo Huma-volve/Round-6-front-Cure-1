@@ -4,7 +4,7 @@ import type { IDoctorDetails } from "@/types";
 import type { IAppointmentValues } from "@/types";
 
 // const TOKEN = import.meta.env.VITE_TOKEN_DOCTOR;
-const TOKEN = localStorage.getItem("token");
+const TOKEN = JSON.stringify(localStorage.getItem("token"));
 
 // GET DOCTORS DATA
 export const fetchDoctorsData = async (): Promise<IDoctorDetails[]> => {

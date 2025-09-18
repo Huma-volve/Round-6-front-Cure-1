@@ -17,8 +17,11 @@ import {
     Notifications,
     Favourite,
     DoctorDetails,
+    Appointments,
+    ProtectedRoute,
 } from "./pages/index";
 import { loader as doctorDetailsLoader } from "./pages/doctorDetails/DoctorDetails";
+import { loader as appointmentsLoader } from "./pages/appointments/Appointments";
 
 export const router = createBrowserRouter([
     {
@@ -51,7 +54,11 @@ export const router = createBrowserRouter([
     },
     {
         path: "/",
-        element: <Layout />,
+        element: (
+            <ProtectedRoute>
+                <Layout />
+            </ProtectedRoute>
+        ),
         children: [
             {
                 path: "/",
@@ -85,6 +92,11 @@ export const router = createBrowserRouter([
                 path: "/doctors/:doctorId",
                 element: <DoctorDetails />,
                 loader: doctorDetailsLoader,
+            },
+            {
+                path: "/appointments",
+                element: <Appointments />,
+                loader: appointmentsLoader,
             },
         ],
     },
