@@ -53,7 +53,7 @@ export const initializeMap = async (
   onMarkerClick: (doctor: IDoctorDetails & { lat: number; lng: number }) => void
 ): Promise<L.Map | null> => {
   try {
-    // Wait for Leaflet to load
+
     await loadLeafletAssets();
     
     const L = (window as any).L;
@@ -62,12 +62,10 @@ export const initializeMap = async (
     // Create map
     const map = L.map('map').setView([30.0444, 31.2357], 12);
 
-    // Add tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
     }).addTo(map);
 
-    // Create doctor icon
     const doctorIcon = L.icon({
       iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
       shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
@@ -77,17 +75,17 @@ export const initializeMap = async (
       shadowSize: [41, 41],
     });
 
-    // Add markers for each doctor
+    
     for (const doctor of doctors) {
       let coords = { lat: doctor.lat ?? 0, lng: doctor.lng ?? 0 };
 
-      // Fetch coordinates if not available
+    
       if (!doctor.lat || !doctor.lng) {
         const fetched = await fetchCoordinates(doctor.address ?? '');
         if (fetched) coords = fetched;
       }
 
-      // Add marker if coordinates are valid
+
       if (coords.lat && coords.lng) {
         L.marker([coords.lat, coords.lng], { icon: doctorIcon })
           .addTo(map)
@@ -105,7 +103,7 @@ export const initializeMap = async (
   }
 };
 
-// Function to update map view to doctor location
+
 export const updateMapView = async (
   map: L.Map | null,
   doctor: IDoctorDetails
@@ -113,8 +111,7 @@ export const updateMapView = async (
   if (!map) return {};
 
   let coords = { lat: doctor.lat, lng: doctor.lng };
-  
-  // Fetch coordinates if not available
+
   if (!coords.lat || !coords.lng) {
     const fetched = await fetchCoordinates(
       doctor.address ? doctor.address : 'El Nasr Hospital, Cairo'
@@ -122,7 +119,6 @@ export const updateMapView = async (
     if (fetched) coords = fetched;
   }
 
-  // Update map view if coordinates are valid
   if (coords.lat && coords.lng) {
     map.setView([coords.lat, coords.lng], 15);
   }
