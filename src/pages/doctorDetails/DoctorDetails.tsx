@@ -10,7 +10,7 @@ import AboutDoctor from "./components/AboutDoctor";
 import DoctorReviews from "./components/DoctorReviews";
 import { getAvailableSlots, getDoctorDetails } from "@/api/doctors/doctors";
 import { Loader } from "@/components/common/Loader";
-import PageHeader from "@/components/common/PageHeader";
+import PageHeader from "@/pages/doctorDetails/components/PageHeader";
 import Appointment from "./components/Appointment";
 import DoctorLocation from "./components/DoctorLocation";
 

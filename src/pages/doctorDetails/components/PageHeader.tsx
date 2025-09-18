@@ -1,5 +1,5 @@
 import { Heart } from "lucide-react";
-import GoBackButton from "./GoBackButton";
+import GoBackButton from "@/components/common/GoBackButton";
 
 type PageHeaderProps = {
     title: string;

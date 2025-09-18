@@ -46,6 +46,17 @@ export type ISpecialist = {
     updated_at: Date;
 };
 
+export type ISpeciality = {
+    id: number;
+    name_en: string;
+    name_ar: string;
+    description: string;
+    icon: string;
+    status: number;
+    created_at: Date;
+    updated_at: Date;
+};
+
 export type IBooking = {
     id: number;
     user_id: number;
@@ -76,12 +87,12 @@ export type IDoctorProfile = {
 export type IDoctor = {
     id: number;
     name: string;
+    avatar: string;
     email: string;
     stripe_id: string;
     email_verified_at: Date;
     is_active: number;
     phone: string;
-    avatar: string;
     birthdate: Date;
     created_at: null;
     updated_at: null;
@@ -178,4 +189,30 @@ export type IReviewsLink = {
     url: null | string;
     label: string;
     active: boolean;
+};
+
+export type IAppointment = {
+    id: number;
+    user_id: number;
+    doctor_id: number;
+    date: Date;
+    time: string;
+    status: string;
+    is_paid: number;
+    payment_reference: null;
+    created_at: Date;
+    updated_at: Date;
+    doctor: {
+        id: number;
+        name: string;
+        profile_image: null;
+        phone: string;
+        email: string;
+        specialist_id: number;
+        bio: string;
+        available_slots: string[];
+        status: boolean;
+        created_at: Date;
+        updated_at: Date;
+    };
 };
