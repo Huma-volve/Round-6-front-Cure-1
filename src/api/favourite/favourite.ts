@@ -11,7 +11,7 @@ export const handleGetFavorites = async () => {
     });
 
     if (res.status === 200) {
-      return res.data.data;
+      return res.data;
     }
   } catch (error) {
     console.error("Get favourites error:", error);

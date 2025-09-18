@@ -14,6 +14,7 @@ import FAQsPage from "./pages/profile/FAQsPage";
 import ProfileScreen from "./pages/profile/ProfilePage";
 import { PrivacyPage } from "./pages/profile/PrivacyPolicyPage";
 import Notifications from "./pages/notification/Notifications";
+import Favourite from "./pages/favourite/Favourite";
 
 export const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ export const router = createBrowserRouter([
       {
         path: "/notifications",
         element: <Notifications />,
+      },
+      {
+        path: "/favourite",
+        element: <Favourite />,
       },
     ],
   },

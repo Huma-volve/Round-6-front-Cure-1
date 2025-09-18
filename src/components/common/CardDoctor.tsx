@@ -2,6 +2,7 @@ import { Star, Clock, Heart } from "lucide-react";
 import type { IDoctorDetails } from "../../types";
 import doctorPhoto from "../../assets/images/doctorPhoto.jpg";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 type DoctorCardProps = {
   doctor: IDoctorDetails;
@@ -10,10 +11,10 @@ type DoctorCardProps = {
 };
 
 const formatTime = (time: string) => {
-  const [hours, minutes] = time.split(":").map(Number);
+  const [hours, minutes] = time?.split(":")?.map(Number) ?? [];
   const suffix = hours >= 12 ? "PM" : "AM";
   const formattedHours = ((hours + 11) % 12) + 1; // يحول 13 → 1
-  return `${formattedHours}:${minutes.toString().padStart(2, "0")} ${suffix}`;
+  return `${formattedHours}:${minutes?.toString()?.padStart(2, "0")} ${suffix}`;
 };
 
 function CardDoctor({
@@ -21,6 +22,7 @@ function CardDoctor({
   isFavourite,
   onToggleFavourite,
 }: DoctorCardProps) {
+  const [toggleHeart, setToggleHeart] = useState(isFavourite);
   return (
     <>
       <Link
@@ -50,12 +52,13 @@ function CardDoctor({
                 onClick={(e) => {
                   e.preventDefault();
                   onToggleFavourite?.(doctor.doctor_profile_id);
+                  setToggleHeart((prev) => !prev);
                 }}
               >
                 <Heart
                   size={30}
                   className={`${
-                    isFavourite ? "fill-red-500 text-red-500" : "text-gray-600"
+                    toggleHeart ? "fill-red-500 text-red-500" : "text-gray-600"
                   } cursor-pointer`}
                 />
               </button>
