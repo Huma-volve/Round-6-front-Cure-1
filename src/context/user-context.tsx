@@ -1,1 +1,53 @@
-// user-context.tsx
+import { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
+import type { IUserData } from "@/types";
+
+export const UserContext = createContext({
+  user: null as IUserData | null,
+  handleGetUser: () => {},
+});
+
+export const UserContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [user, setUser] = useState<IUserData | null>(null);
+
+  const handleGetUser = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.get(`${BASE_URL}me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (res.status === 200) {
+        setUser(res.data.data.user);
+      }
+      console.log(user);
+    } catch (error) {
+      console.error("Get user error:", error);
+    }
+  };
+
+  console.log(user);
+
+  useEffect(() => {
+    handleGetUser();
+  }, []);
+
+  return (
+    <UserContext.Provider value={{ user, handleGetUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export const useUserContext = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useUserContext must be used within a UserContextProvider");
+  }
+  return context;
+};

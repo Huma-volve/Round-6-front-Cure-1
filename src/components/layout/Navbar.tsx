@@ -16,9 +16,12 @@ import {
 import CureIcon from "../common/CureIcon";
 import { useNavigate } from "react-router-dom";
 import { handleLogout } from "@/api/auth/auth";
+import { useUserContext } from "@/context/user-context";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { user } = useUserContext();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
 
@@ -95,11 +98,20 @@ const Navbar = () => {
             className="relative cursor-pointer"
           >
             <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200">
-              <img
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
+              {user?.avatar ? (
+                <img
+                  src={`${user?.avatar}`}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                  onError={() => {
+                    user.avatar = "https://github.com/shadcn.png";
+                  }}
+                />
+              ) : (
+                <Avatar className="w-full h-full">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                </Avatar>
+              )}
             </div>
           </button>
         </div>
@@ -110,15 +122,24 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-full overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
+              {user?.avatar ? (
+                <img
+                  src={`${user?.avatar}`}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                  onError={() => {
+                    user.avatar = "https://github.com/shadcn.png";
+                  }}
+                />
+              ) : (
+                <Avatar className="w-full h-full">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                </Avatar>
+              )}
             </div>
             <div>
               <h2 className="text-sm md:text-xl font-semibold text-gray-900">
-                Welcome back, Seif
+                Welcome back, {user?.name}
               </h2>
               <p className="text-sm text-gray-500 flex items-center">
                 <span>📍 129 El-Nasr Street, Cairo</span>
@@ -168,17 +189,27 @@ const Navbar = () => {
             <div className="p-4">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
+                  {user?.avatar ? (
+                    <img
+                      src={`${user?.avatar}`}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                      onError={() => {
+                        user.avatar = "https://github.com/shadcn.png";
+                      }}
+                    />
+                  ) : (
+                    <Avatar className="w-full h-full">
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                    </Avatar>
+                  )}
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900">Seif Mohamed</h3>
+                  <h3 className="font-semibold text-gray-900">{user?.name}</h3>
                   <p className="text-sm text-gray-500">
                     📍 129 El-Nasr Street, Cairo
                   </p>
+                  <p className="text-sm text-gray-500">{user?.email}</p>
                 </div>
                 <button
                   title="Settings"
