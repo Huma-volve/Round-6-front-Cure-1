@@ -1,19 +1,39 @@
+import { useEffect, useState } from "react";
 import { MapPin, ChevronRight } from "lucide-react";
 import { Card } from "../ui/Card";
 import { useNavigate } from "react-router-dom";
+import { getProfile } from "@/api/profile/profile";
+import type { IUserData } from "../../types";
 
 type Props = {
-  name: string;
   address: string;
-  avatarUrl?: string;
 };
 
-export default function ProfileHeader({
-  name,
-  address,
-  avatarUrl = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
-}: Props) {
+export default function ProfileHeader({ address }: Props) {
   const navigate = useNavigate();
+  const [profile, setProfile] = useState<IUserData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await getProfile();
+        setProfile(res.data.user);
+      } catch (err) {
+        console.error("Failed to load profile:", err);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
+  if (loading) {
+    return (
+      <Card className="p-4 sm:p-5">
+        <div className="h-16 w-full bg-zinc-100 animate-pulse rounded-lg" />
+      </Card>
+    );
+  }
 
   return (
     <Card className="p-4 sm:p-5">
@@ -22,15 +42,18 @@ export default function ProfileHeader({
         <div className="flex items-center gap-4 min-w-0">
           <div className="relative">
             <img
-              src={avatarUrl}
+              src={
+                profile?.avatar
+              }
               alt="Avatar"
               className="h-16 w-16 rounded-full object-cover"
             />
           </div>
           <div className="min-w-0">
             <h2 className="text-lg font-semibold text-zinc-900 truncate">
-              {name}
+              {profile?.name || "Loading..."}
             </h2>
+
             <p className="mt-0.5 text-sm text-zinc-500 flex items-center gap-1 truncate">
               <MapPin className="h-4 w-4" /> {address}
             </p>

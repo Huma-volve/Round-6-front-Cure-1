@@ -16,6 +16,11 @@ import { PrivacyPage } from "./pages/profile/PrivacyPolicyPage";
 import Notifications from "./pages/notification/Notifications";
 import Review from "./pages/review/Review";
 import EditProfilePage from "./pages/profile/EditProfile";
+import SettingsPage from "./pages/profile/SettingsPage";
+import PasswordManagementPage from "./pages/profile/PasswordManagementPage";
+import PaymentMethodPage from "./pages/profile/PaymentMethodPage";
+import PaymentListPage from "./pages/profile/PaymentListPage";
+import AddNewCardPage from "./pages/profile/AddNewCardPage";
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +90,26 @@ export const router = createBrowserRouter([
       {
         path: "/edit-profile",
         element: <EditProfilePage />,
+      },
+      {
+        path: "/settings",
+        element: <SettingsPage />,
+      },
+      {
+        path: "/password-management",
+        element: <PasswordManagementPage />,
+      },
+      {
+        path: "/payment-management",
+        element: <PaymentMethodPage />,
+      },
+      {
+        path: "/payment-list",
+        element: <PaymentListPage />,
+      },
+      {
+        path: "/add-card",
+        element: <AddNewCardPage />,
       },
     ],
   },
