@@ -1,30 +1,29 @@
-// hooks/useFavourites.ts
-import { useEffect, useState } from "react";
 import {
   handleAddFavorite,
   handleGetFavorites,
   handleRemoveFavorite,
 } from "@/api/favourite/favourite";
+import { useEffect, useState } from "react";
 
 export function useFavourites() {
   const [favouritesIDs, setFavouritesIDs] = useState<number[]>([]);
   const [AllFavourites, setAllFavourites] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchFavourites = async () => {
     try {
       setLoading(true);
-      const res = await handleGetFavorites();
-      setAllFavourites(res.data);
+      const data = await handleGetFavorites();
+      setAllFavourites(data);
       setFavouritesIDs(
-        res.data.map(
+        data.map(
           (f: { favouritable: { doctor_profile: { id: number } } }) =>
             f.favouritable.doctor_profile.id
         )
       );
-      setLoading(false);
     } catch (error) {
       console.error("Fetch favourites error:", error);
+    } finally {
       setLoading(false);
     }
   };
@@ -36,13 +35,10 @@ export function useFavourites() {
   const toggleFavourite = async (doctorId: number) => {
     if (favouritesIDs.includes(doctorId)) {
       await handleRemoveFavorite(doctorId.toString());
-      await fetchFavourites();
-      setFavouritesIDs((prev) => prev.filter((id) => id !== doctorId));
     } else {
       await handleAddFavorite(doctorId.toString());
-      await fetchFavourites();
-      setFavouritesIDs((prev) => [...prev, doctorId]);
     }
+    await fetchFavourites();
   };
 
   return { favouritesIDs, toggleFavourite, AllFavourites, loading };

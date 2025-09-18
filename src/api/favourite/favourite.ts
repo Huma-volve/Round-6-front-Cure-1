@@ -2,16 +2,15 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const TOKEN = localStorage.getItem("token");
 
 export const handleGetFavorites = async () => {
   try {
     const res = await axios.get(`${BASE_URL}favourites/doctors`, {
-      headers: { Authorization: `Bearer ${TOKEN}` },
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
 
     if (res.status === 200) {
-      return res.data;
+      return res.data.data;
     }
   } catch (error) {
     console.error("Get favourites error:", error);
@@ -25,7 +24,7 @@ export const handleAddFavorite = async (doctorId: string) => {
       `${BASE_URL}favourites/doctors/${doctorId}`,
       {},
       {
-        headers: { Authorization: `Bearer ${TOKEN}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       }
     );
 
@@ -44,7 +43,7 @@ export const handleRemoveFavorite = async (doctorId: string) => {
     const res = await axios.delete(
       `${BASE_URL}favourites/doctors/${doctorId}`,
       {
-        headers: { Authorization: `Bearer ${TOKEN}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       }
     );
 

@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import CureIcon from "../common/CureIcon";
 import { useNavigate } from "react-router-dom";
+import { handleLogout } from "@/api/auth/auth";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -27,6 +28,11 @@ const Navbar = () => {
 
   const closeProfile = () => {
     setIsProfileOpen(false);
+  };
+
+  const logout = async () => {
+    const res = await handleLogout();
+    if (res) navigate("/sign-in");
   };
 
   return (
@@ -55,12 +61,17 @@ const Navbar = () => {
         {/* Right Side Icons */}
         <div className="flex items-center space-x-4 mr-10">
           {/* Mobile Menu */}
-          <button className="md:hidden p-2">
+          <button
+            type="button"
+            title="Menu"
+            className="md:hidden p-2 cursor-pointer"
+          >
             <Menu className="w-5 h-5 text-gray-600" />
           </button>
 
           {/* Desktop Icons */}
           <button
+            title="Favourite"
             type="button"
             className="hidden md:block p-2 hover:bg-gray-100 rounded-lg cursor-pointer"
             onClick={() => navigate("/favourite")}
@@ -68,6 +79,7 @@ const Navbar = () => {
             <Heart className="w-5 h-5 text-gray-600" />
           </button>
           <button
+            title="Notification"
             type="button"
             className="hidden md:block p-2 hover:bg-gray-100 rounded-lg relative cursor-pointer"
           >
@@ -76,7 +88,12 @@ const Navbar = () => {
           </button>
 
           {/* Profile Photo */}
-          <button onClick={toggleProfile} className="relative">
+          <button
+            title="Profile"
+            type="button"
+            onClick={toggleProfile}
+            className="relative cursor-pointer"
+          >
             <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200">
               <img
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
@@ -109,10 +126,21 @@ const Navbar = () => {
             </div>
           </div>
           <div className="flex space-x-2">
-            <button className="p-2 hover:bg-gray-100 rounded-lg">
-              <Heart className="w-5 h-5 text-gray-600" />
+            <button
+              title="Favourite"
+              type="button"
+              className="p-2 hover:bg-gray-100 rounded-lg cursor-pointer"
+            >
+              <Heart
+                className="w-5 h-5 text-gray-600"
+                onClick={() => navigate("/favourite")}
+              />
             </button>
-            <button className="p-2 hover:bg-gray-100 rounded-lg relative">
+            <button
+              title="Notification"
+              type="button"
+              className="p-2 hover:bg-gray-100 rounded-lg relative cursor-pointer"
+            >
               <Bell className="w-5 h-5 text-gray-600" />
               <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
             </button>
@@ -152,31 +180,52 @@ const Navbar = () => {
                     📍 129 El-Nasr Street, Cairo
                   </p>
                 </div>
-                <button className="p-1 cursor-pointer hover:bg-gray-100 rounded">
+                <button
+                  title="Settings"
+                  type="button"
+                  className="p-1 cursor-pointer hover:bg-gray-100 rounded"
+                >
                   <Settings className="w-4 h-4 text-gray-600" />
                 </button>
               </div>
 
               <div className="space-y-1">
-                <button className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg">
+                <button
+                  title="Payment Method"
+                  type="button"
+                  className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                >
                   <CreditCard className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Payment Method</span>
                   <ChevronRight className="w-4 h-4 text-gray-400" />
                 </button>
 
-                <button className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg">
+                <button
+                  title="Settings"
+                  type="button"
+                  className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                >
                   <Settings className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Settings</span>
                   <ChevronRight className="w-4 h-4 text-gray-400" />
                 </button>
 
-                <button className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg">
+                <button
+                  title="Privacy Policy"
+                  type="button"
+                  className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
+                >
                   <Shield className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Privacy Policy</span>
                   <ChevronRight className="w-4 h-4 text-gray-400" />
                 </button>
 
-                <button className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-red-50 rounded-lg">
+                <button
+                  title="Log out"
+                  type="button"
+                  className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-red-50 rounded-lg"
+                  onClick={logout}
+                >
                   <LogOut className="w-5 h-5 text-red-600" />
                   <span className="flex-1 text-red-600">Log out</span>
                 </button>
@@ -190,8 +239,10 @@ const Navbar = () => {
       <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-4 py-2 md:hidden z-50">
         <div className="flex justify-around">
           <button
+            title="Home"
+            type="button"
             onClick={() => setActiveTab("home")}
-            className={`flex flex-col items-center py-2 px-4 ${
+            className={`flex flex-col items-center py-2 px-4 cursor-pointer ${
               activeTab === "home" ? "text-blue-600" : "text-gray-600"
             }`}
           >
@@ -200,8 +251,10 @@ const Navbar = () => {
           </button>
 
           <button
+            title="Booking"
+            type="button"
             onClick={() => setActiveTab("booking")}
-            className={`flex flex-col items-center py-2 px-4 ${
+            className={`flex flex-col items-center py-2 px-4 cursor-pointer ${
               activeTab === "booking" ? "text-blue-600" : "text-gray-600"
             }`}
           >
@@ -210,8 +263,10 @@ const Navbar = () => {
           </button>
 
           <button
+            title="Profile"
+            type="button"
             onClick={() => setActiveTab("profile")}
-            className={`flex flex-col items-center py-2 px-4 ${
+            className={`flex flex-col items-center py-2 px-4 cursor-pointer ${
               activeTab === "profile" ? "text-blue-600" : "text-gray-600"
             }`}
           >
