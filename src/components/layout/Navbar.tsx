@@ -31,12 +31,12 @@ const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
 
-  const toggleProfile = () => {
-    setIsProfileOpen(!isProfileOpen);
-  };
+  const toggleProfile = () => setIsProfileOpen((v) => !v);
+  const closeProfile = () => setIsProfileOpen(false);
 
-  const closeProfile = () => {
+  const go = (path: string) => {
     setIsProfileOpen(false);
+    navigate(path);
   };
 
   const handleLogout = async () => {
@@ -92,12 +92,7 @@ const Navbar = () => {
             <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
           </button>
 
-          <button
-            type="button"
-            title="Profile"
-            onClick={toggleProfile}
-            className="relative"
-          >
+          <button type="button" title="Profile" onClick={toggleProfile} className="relative">
             <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200">
               <img
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
@@ -129,18 +124,10 @@ const Navbar = () => {
             </div>
           </div>
           <div className="flex space-x-2">
-            <button
-              type="button"
-              title="Heart"
-              className="p-2 hover:bg-gray-100 rounded-lg"
-            >
+            <button type="button" title="Heart" className="p-2 hover:bg-gray-100 rounded-lg">
               <Heart className="w-5 h-5 text-gray-600" />
             </button>
-            <button
-              type="button"
-              title="Bell"
-              className="p-2 hover:bg-gray-100 rounded-lg relative"
-            >
+            <button type="button" title="Bell" className="p-2 hover:bg-gray-100 rounded-lg relative">
               <Bell className="w-5 h-5 text-gray-600" />
               <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
             </button>
@@ -173,15 +160,13 @@ const Navbar = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-semibold text-gray-900">Seif Mohamed</h3>
-                  <p className="text-sm text-gray-500">
-                    📍 129 El-Nasr Street, Cairo
-                  </p>
+                  <p className="text-sm text-gray-500">📍 129 El-Nasr Street, Cairo</p>
                 </div>
                 <button
                   type="button"
                   title="Settings"
                   className="p-1 cursor-pointer hover:bg-gray-100 rounded"
-                  onClick={() => navigate("/edit-profile")}
+                  onClick={() => go("/edit-profile")}
                 >
                   <Settings className="w-4 h-4 text-gray-600" />
                 </button>
@@ -192,7 +177,7 @@ const Navbar = () => {
                   type="button"
                   title="Payment Method"
                   className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
-                  onClick={() => navigate("/payment-management")}
+                  onClick={() => go("/payment-management")}
                 >
                   <CreditCard className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Payment Method</span>
@@ -203,7 +188,7 @@ const Navbar = () => {
                   type="button"
                   title="Settings"
                   className="w-full flex cursor-pointer items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
-                  onClick={() => navigate("/settings")}
+                  onClick={() => go("/settings")}
                 >
                   <Settings className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Settings</span>
@@ -214,7 +199,7 @@ const Navbar = () => {
                   type="button"
                   title="Privacy Policy"
                   className="w-full cursor-pointer flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-lg"
-                  onClick={() => navigate("/privacy")}
+                  onClick={() => go("/privacy")}
                 >
                   <Shield className="w-5 h-5 text-gray-600" />
                   <span className="flex-1 text-gray-700">Privacy Policy</span>
@@ -245,8 +230,7 @@ const Navbar = () => {
             type="button"
             title="Home"
             onClick={() => setActiveTab("home")}
-            className={`flex flex-col items-center py-2 px-4 ${activeTab === "home" ? "text-blue-600" : "text-gray-600"
-              }`}
+            className={`flex flex-col items-center py-2 px-4 ${activeTab === "home" ? "text-blue-600" : "text-gray-600"}`}
           >
             <Home className="w-5 h-5 mb-1" />
             <span className="text-xs">Home</span>
@@ -256,8 +240,7 @@ const Navbar = () => {
             type="button"
             title="Booking"
             onClick={() => setActiveTab("booking")}
-            className={`flex flex-col items-center py-2 px-4 ${activeTab === "booking" ? "text-blue-600" : "text-gray-600"
-              }`}
+            className={`flex flex-col items-center py-2 px-4 ${activeTab === "booking" ? "text-blue-600" : "text-gray-600"}`}
           >
             <Calendar className="w-5 h-5 mb-1" />
             <span className="text-xs">Booking</span>
@@ -267,8 +250,7 @@ const Navbar = () => {
             type="button"
             title="Profile"
             onClick={() => setActiveTab("profile")}
-            className={`flex flex-col items-center py-2 px-4 ${activeTab === "profile" ? "text-blue-600" : "text-gray-600"
-              }`}
+            className={`flex flex-col items-center py-2 px-4 ${activeTab === "profile" ? "text-blue-600" : "text-gray-600"}`}
           >
             <User className="w-5 h-5 mb-1" />
             <span className="text-xs">Profile</span>
