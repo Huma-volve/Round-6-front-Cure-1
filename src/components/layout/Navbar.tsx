@@ -1,4 +1,3 @@
-import { logout } from "@/api/profile/profile";
 import {
   Dialog,
   DialogClose,
@@ -24,10 +23,14 @@ import {
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CureIcon from "../common/CureIcon";
+import { handleLogout } from "@/api/auth/auth";
+import { useUserContext } from "@/context/user-context";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
   const [logoutOpen, setLogoutOpen] = React.useState(false);
   const navigate = useNavigate();
+  const { user } = useUserContext();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
 
@@ -39,15 +42,9 @@ const Navbar = () => {
     setIsProfileOpen(false);
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (e) {
-      console.error(e);
-    } finally {
-      localStorage.removeItem("token");
-      navigate("/sign-in", { replace: true });
-    }
+  const logout = async () => {
+    const res = await handleLogout();
+    if (res) navigate("/sign-in");
   };
 
   return (
@@ -71,7 +68,12 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-4 mr-10">
-          <button type="button" title="Menu" className="md:hidden p-2">
+          {/* Mobile Menu */}
+          <button
+            type="button"
+            title="Menu"
+            className="md:hidden p-2 cursor-pointer"
+          >
             <Menu className="w-5 h-5 text-gray-600" />
           </button>
 
@@ -84,7 +86,7 @@ const Navbar = () => {
             <Heart className="w-5 h-5 text-gray-600" />
           </button>
           <button
-            title="Bell"
+            title="Notification"
             type="button"
             className="hidden md:block p-2 hover:bg-gray-100 rounded-lg relative cursor-pointer"
           >
@@ -92,18 +94,28 @@ const Navbar = () => {
             <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
           </button>
 
+          {/* Profile Photo */}
           <button
-            type="button"
             title="Profile"
+            type="button"
             onClick={toggleProfile}
-            className="relative"
+            className="relative cursor-pointer"
           >
             <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200">
-              <img
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
+              {user?.avatar ? (
+                <img
+                  src={`${user?.avatar}`}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                  onError={() => {
+                    user.avatar = "https://github.com/shadcn.png";
+                  }}
+                />
+              ) : (
+                <Avatar className="w-full h-full">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                </Avatar>
+              )}
             </div>
           </button>
         </div>
@@ -113,15 +125,24 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-full overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
+              {user?.avatar ? (
+                <img
+                  src={`${user?.avatar}`}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                  onError={() => {
+                    user.avatar = "https://github.com/shadcn.png";
+                  }}
+                />
+              ) : (
+                <Avatar className="w-full h-full">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                </Avatar>
+              )}
             </div>
             <div>
               <h2 className="text-sm md:text-xl font-semibold text-gray-900">
-                Welcome back, Seif
+                Welcome back, {user?.name}
               </h2>
               <p className="text-sm text-gray-500 flex items-center">
                 <span>📍 129 El-Nasr Street, Cairo</span>
@@ -130,16 +151,19 @@ const Navbar = () => {
           </div>
           <div className="flex space-x-2">
             <button
+              title="Favourite"
               type="button"
-              title="Heart"
-              className="p-2 hover:bg-gray-100 rounded-lg"
+              className="p-2 hover:bg-gray-100 rounded-lg cursor-pointer"
             >
-              <Heart className="w-5 h-5 text-gray-600" />
+              <Heart
+                className="w-5 h-5 text-gray-600"
+                onClick={() => navigate("/favourite")}
+              />
             </button>
             <button
+              title="Notification"
               type="button"
-              title="Bell"
-              className="p-2 hover:bg-gray-100 rounded-lg relative"
+              className="p-2 hover:bg-gray-100 rounded-lg relative cursor-pointer"
             >
               <Bell className="w-5 h-5 text-gray-600" />
               <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
@@ -160,22 +184,35 @@ const Navbar = () => {
 
       {isProfileOpen && (
         <>
-          <div className="fixed inset-0 bg-black/40 z-30" onClick={closeProfile}></div>
+          <div
+            className="fixed inset-0 bg-black/40 z-30"
+            onClick={closeProfile}
+          ></div>
           <div className="fixed top-16 right-4 w-80 bg-[#F5F6F7] rounded-lg shadow-xl z-40 border">
             <div className="p-4">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
+                  {user?.avatar ? (
+                    <img
+                      src={`${user?.avatar}`}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                      onError={() => {
+                        user.avatar = "https://github.com/shadcn.png";
+                      }}
+                    />
+                  ) : (
+                    <Avatar className="w-full h-full">
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                    </Avatar>
+                  )}
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900">Seif Mohamed</h3>
+                  <h3 className="font-semibold text-gray-900">{user?.name}</h3>
                   <p className="text-sm text-gray-500">
                     📍 129 El-Nasr Street, Cairo
                   </p>
+                  <p className="text-sm text-gray-500">{user?.email}</p>
                 </div>
                 <button
                   type="button"
@@ -242,33 +279,36 @@ const Navbar = () => {
       <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-4 py-2 md:hidden z-50">
         <div className="flex justify-around">
           <button
-            type="button"
             title="Home"
+            type="button"
             onClick={() => setActiveTab("home")}
-            className={`flex flex-col items-center py-2 px-4 ${activeTab === "home" ? "text-blue-600" : "text-gray-600"
-              }`}
+            className={`flex flex-col items-center py-2 px-4 cursor-pointer ${
+              activeTab === "home" ? "text-blue-600" : "text-gray-600"
+            }`}
           >
             <Home className="w-5 h-5 mb-1" />
             <span className="text-xs">Home</span>
           </button>
 
           <button
-            type="button"
             title="Booking"
+            type="button"
             onClick={() => setActiveTab("booking")}
-            className={`flex flex-col items-center py-2 px-4 ${activeTab === "booking" ? "text-blue-600" : "text-gray-600"
-              }`}
+            className={`flex flex-col items-center py-2 px-4 cursor-pointer ${
+              activeTab === "booking" ? "text-blue-600" : "text-gray-600"
+            }`}
           >
             <Calendar className="w-5 h-5 mb-1" />
             <span className="text-xs">Booking</span>
           </button>
 
           <button
-            type="button"
             title="Profile"
+            type="button"
             onClick={() => setActiveTab("profile")}
-            className={`flex flex-col items-center py-2 px-4 ${activeTab === "profile" ? "text-blue-600" : "text-gray-600"
-              }`}
+            className={`flex flex-col items-center py-2 px-4 cursor-pointer ${
+              activeTab === "profile" ? "text-blue-600" : "text-gray-600"
+            }`}
           >
             <User className="w-5 h-5 mb-1" />
             <span className="text-xs">Profile</span>
@@ -303,7 +343,7 @@ const Navbar = () => {
 
               <button
                 type="button"
-                onClick={handleLogout}
+                onClick={logout}
                 className="w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700"
               >
                 Yes, Logout

@@ -9,6 +9,7 @@ import * as yup from "yup";
 import { Loader } from "@/components/common/Loader";
 import { handleLogin } from "@/api/auth/auth";
 import type { ISignIn } from "@/types";
+// import { useUserContext } from "@/context/user-context";
 
 const social = [
   {
@@ -75,6 +76,7 @@ const social = [
 
 export default function SignIn() {
   const navigate = useNavigate();
+  // const { handleGetUser } = useUserContext();
 
   const validationSchema = yup.object({
     email: yup.string().email("Invalid email").required("Email is required"),
@@ -86,9 +88,9 @@ export default function SignIn() {
 
   const handleLoginSubmit = async (values: ISignIn) => {
     const res = await handleLogin(values);
-    console.log("Login response:", res);
     if (res) {
       navigate("/");
+      // await handleGetUser();
     }
   };
 

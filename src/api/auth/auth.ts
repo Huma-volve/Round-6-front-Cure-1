@@ -11,7 +11,7 @@ export const handleLogin = async (values: ISignIn) => {
     const res = await axios.post(`${BASE_URL}login`, values);
 
     if (res.status === 200) {
-      toast.success("Login successful");
+      toast.success(`Welcome Back ${res.data.data.user.name} 😊`);
       localStorage.setItem("token", res.data.data.token);
       return true;
     }
@@ -36,7 +36,7 @@ export const handleSignUp = async (values: ISignUp) => {
     });
 
     if (res.status === 201) {
-      toast.success("Sign up successful");
+      toast.success("Sign up successful 😊");
       return true;
     }
   } catch (error) {
@@ -121,6 +121,25 @@ export const handleResetPassword = async (values: {
   } catch (error) {
     const err = error as AxiosError<{ message: string }>;
     console.error("Reset password error:", err);
+    toast.error("Something went wrong");
+  }
+};
+
+export const handleLogout = async () => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}logout`,
+      {},
+      { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+    );
+    if (res.status === 200) {
+      localStorage.removeItem("token");
+      toast.success("See you soon 👋");
+      return true;
+    }
+  } catch (error) {
+    const err = error as AxiosError<{ message: string }>;
+    console.error("Logout error:", err);
     toast.error("Something went wrong");
   }
 };
