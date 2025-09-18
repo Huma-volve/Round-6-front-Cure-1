@@ -9,6 +9,7 @@ import ForgetPassword from "./pages/auth/components/ForgetPassword";
 import VerifyOTP from "./pages/auth/components/VerifyOTP";
 import ResetPassword from "./pages/auth/components/ResetPassword";
 import Favourite from "./pages/favourite/Favourite";
+import { UserContextProvider } from "./context/user-context";
 
 export const router = createBrowserRouter([
   {
@@ -41,7 +42,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <UserContextProvider>
+        <Layout />
+      </UserContextProvider>
+    ),
     children: [
       {
         path: "/",
