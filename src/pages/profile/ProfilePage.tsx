@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Bell,
@@ -10,13 +9,11 @@ import {
   Shield,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 
 import ProfileHeader from "../../components/profile/ProfileHeader";
 import SettingsRow from "../../components/profile/SettingsRow";
 import type { ProfileItem } from "../../types/profile";
 import { logout } from "@/api/profile/profile";
-
 
 import {
   Dialog,
@@ -30,14 +27,14 @@ import {
 export default function ProfileScreen() {
   const navigate = useNavigate();
 
-
   const [logoutOpen, setLogoutOpen] = React.useState(false);
-
 
   const [data, setData] = React.useState<ProfileItem[]>([]);
 
   const handleToggle = (id: string, next: boolean) => {
-    setData((prev) => prev.map((it) => (it.id === id ? { ...it, enabled: next } : it)));
+    setData((prev) =>
+      prev.map((it) => (it.id === id ? { ...it, enabled: next } : it))
+    );
   };
 
   const handleLogout = async () => {
@@ -51,15 +48,50 @@ export default function ProfileScreen() {
     }
   };
 
-
   const items = React.useMemo<ProfileItem[]>(
     () => [
-      { id: "notifications", label: "Notification", icon: Bell, type: "toggle", enabled: true },
-      { id: "payment", label: "Payment Method", icon: CreditCard, type: "link", href: "/payment-management" },
-      { id: "favorites", label: "Favorite", icon: Heart, type: "link", href: "/favourite" },
-      { id: "settings", label: "Settings", icon: SettingsIcon, type: "link", href: "/settings" },
-      { id: "faqs", label: "FAQs", icon: HelpCircle, type: "link", href: "/faqs" },
-      { id: "privacy", label: "Privacy Policy", icon: Shield, type: "link", href: "/privacy" },
+      {
+        id: "notifications",
+        label: "Notification",
+        icon: Bell,
+        type: "toggle",
+        enabled: true,
+      },
+      {
+        id: "payment",
+        label: "Payment Method",
+        icon: CreditCard,
+        type: "link",
+        href: "/payment-management",
+      },
+      {
+        id: "favorites",
+        label: "Favorite",
+        icon: Heart,
+        type: "link",
+        href: "/favourite",
+      },
+      {
+        id: "settings",
+        label: "Settings",
+        icon: SettingsIcon,
+        type: "link",
+        href: "/settings",
+      },
+      {
+        id: "faqs",
+        label: "FAQs",
+        icon: HelpCircle,
+        type: "link",
+        href: "/faqs",
+      },
+      {
+        id: "privacy",
+        label: "Privacy Policy",
+        icon: Shield,
+        type: "link",
+        href: "/privacy",
+      },
       {
         id: "logout",
         label: "Log out",
@@ -67,7 +99,7 @@ export default function ProfileScreen() {
         type: "link",
         tone: "danger",
         onClick: () => setLogoutOpen(true),
-        href: ""
+        href: "",
       },
     ],
     []
@@ -78,14 +110,9 @@ export default function ProfileScreen() {
   return (
     <div className="min-h-screen bg-zinc-50 py-4 sm:py-8">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-3 sm:px-6 lg:grid-cols-3 lg:gap-6">
-
         <div className="lg:col-span-1">
-          <ProfileHeader
-
-            address="129, El-Nasr Street, Cairo"
-          />
+          <ProfileHeader address="129, El-Nasr Street, Cairo" />
         </div>
-
 
         <div className="lg:col-span-2">
           <ul className="mx-auto max-w-md px-3 space-y-3">
@@ -98,11 +125,12 @@ export default function ProfileScreen() {
         </div>
       </div>
 
-
       <Dialog open={logoutOpen} onOpenChange={setLogoutOpen}>
         <DialogContent className="rounded-2xl p-0 sm:max-w-md">
           <DialogHeader className="px-4 pt-4 pb-2 sm:px-6">
-            <DialogTitle className="text-center text-lg font-semibold">Logout</DialogTitle>
+            <DialogTitle className="text-center text-lg font-semibold">
+              Logout
+            </DialogTitle>
           </DialogHeader>
 
           <div className="mx-4 sm:mx-6 h-px bg-zinc-200" />

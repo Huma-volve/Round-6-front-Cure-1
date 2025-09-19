@@ -92,10 +92,10 @@ function CardDoctor({
           </span>
         </div>
 
-        <Link to={`details/${doctor.user_id}`} key={doctor.doctor_profile_id}>
+        <Link to={`/doctors/${doctor.user_id}`} key={doctor.doctor_profile_id}>
           <button
             type="button"
-            className="w-full text-white cursor-pointer bg-primary py-2 px-4 rounded-lg hover:bg-primary-100 transition-colors font-medium"
+            className="w-full text-white cursor-pointer bg-primary py-2 px-4 rounded-lg hover:bg-primary/80 transition-colors font-medium"
           >
             Book appointment
           </button>

@@ -5,10 +5,12 @@ import YoutubeImage from "../../assets/images/youtube.png";
 import LinkedInimage from "../../assets/images/linkedin.png";
 import CureIcon from "../common/CureIcon";
 import MiniFooter from "../../pages/home/components/MiniFooter";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   return (
     <>
       {location.pathname === "/" && <MiniFooter />}
@@ -19,7 +21,10 @@ const Footer = () => {
             <div className="md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-16 h-16 bg-transparent rounded-full flex items-center justify-center">
-                  <div className="w-16 h-16 text-slate-900">
+                  <div
+                    className="w-16 h-16 text-slate-900 cursor-pointer"
+                    onClick={() => navigate("/")}
+                  >
                     <CureIcon color="secondary" />
                   </div>
                 </div>
@@ -52,36 +57,36 @@ const Footer = () => {
               <h3 className="text-lg font-semibold mb-4">Company</h3>
               <ul className="space-y-3">
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/"
                     className="text-gray-300 hover:text-white transition-colors text-sm"
                   >
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/search"
                     className="text-gray-300 hover:text-white transition-colors text-sm"
                   >
                     Doctors
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/faqs"
                     className="text-gray-300 hover:text-white transition-colors text-sm"
                   >
                     FAQs
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/contact-us"
                     className="text-gray-300 hover:text-white transition-colors text-sm"
                   >
                     Contact Us
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -91,36 +96,36 @@ const Footer = () => {
               <h3 className="text-lg font-semibold mb-4">Support</h3>
               <ul className="space-y-3">
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/contact-us"
                     className="text-gray-300 hover:text-white transition-colors text-sm"
                   >
                     Help Center
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/"
                     className="text-gray-300 hover:text-white transition-colors text-sm"
                   >
                     How it Works
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/privacy"
                     className="text-gray-300 hover:text-white transition-colors text-sm"
                   >
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/privacy"
                     className="text-gray-300 hover:text-white transition-colors text-sm"
                   >
                     Terms & Conditions
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -133,12 +138,12 @@ const Footer = () => {
                   <Phone size={18} className="text-white mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-gray-300 text-sm">Phone</p>
-                    <a
-                      href="tel:080707555321"
+                    <Link
+                      to="tel:080707555321"
                       className="text-white text-sm hover:underline"
                     >
                       080 707 555-321
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -146,12 +151,12 @@ const Footer = () => {
                   <Mail size={18} className="text-white mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-gray-300 text-sm">Email</p>
-                    <a
-                      href="mailto:demo@example.com"
+                    <Link
+                      to="mailto:demo@example.com"
                       className="text-white text-sm hover:underline"
                     >
                       demo@example.com
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -159,14 +164,14 @@ const Footer = () => {
                   <MapPin size={18} className="text-white mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-gray-300 text-sm">Address</p>
-                    <a
-                      href="https://www.google.com/maps?q=526+Melrose+Street,+Water+Mill,+11976+New+York"
+                    <Link
+                      to="https://www.google.com/maps?q=526+Melrose+Street,+Water+Mill,+11976+New+York"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-white text-sm hover:underline"
                     >
                       526 Melrose Street, Water Mill, 11976 New York
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -179,13 +184,19 @@ const Footer = () => {
               ©2024 Techvio - All Right Reserved
             </p>
             <div className="flex gap-6">
-              <a href="#" className="text-white  transition-colors text-sm">
+              <Link
+                to="/privacy"
+                className="text-white  transition-colors text-sm"
+              >
                 Terms & Condition
-              </a>
+              </Link>
               <span className="text-white">|</span>
-              <a href="#" className="text-white  transition-colors text-sm">
+              <Link
+                to="/privacy"
+                className="text-white  transition-colors text-sm"
+              >
                 Privacy Policy
-              </a>
+              </Link>
             </div>
           </div>
         </div>

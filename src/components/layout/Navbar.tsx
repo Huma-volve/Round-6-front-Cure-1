@@ -55,7 +55,10 @@ const Navbar = () => {
       {/* Header */}
       <header className="bg-white hidden md:flex shadow-sm px-4 py-3  items-center justify-between relative z-20 ">
         <div className="flex items-center ml-10">
-          <div className="w-8 h-8  rounded-lg flex items-center justify-center">
+          <div
+            className="w-8 h-8  rounded-lg flex items-center justify-center cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             <CureIcon color="primary" />
           </div>
         </div>
@@ -64,6 +67,7 @@ const Navbar = () => {
           <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input
+              onClick={() => navigate("/search")}
               type="text"
               placeholder="Search doctors, speciality, clinics"
               className="w-full pl-10 pr-4 py-2 bg-[#F5F6F7] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -93,6 +97,7 @@ const Navbar = () => {
             title="Notification"
             type="button"
             className="hidden md:block p-2 hover:bg-gray-100 rounded-lg relative cursor-pointer"
+            onClick={() => navigate("/notifications")}
           >
             <Bell className="w-5 h-5 text-gray-600" />
             <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
@@ -174,10 +179,11 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-        <div className="flex flex-1 max-w-2xl mx-8 mt-7">
+        <div className="flex flex-1 mt-4">
           <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input
+              onClick={() => navigate("/search")}
               type="text"
               placeholder="Search doctors, speciality, clinics"
               className="w-full pl-10 pr-4 py-2 bg-[#F5F6F7] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -216,7 +222,6 @@ const Navbar = () => {
                   <p className="text-sm text-gray-500">
                     📍 129 El-Nasr Street, Cairo
                   </p>
-                  <p className="text-sm text-gray-500">{user?.email}</p>
                 </div>
                 <button
                   type="button"

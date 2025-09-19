@@ -32,6 +32,7 @@ import {
 } from "./pages/index";
 import { loader as doctorDetailsLoader } from "./pages/doctorDetails/DoctorDetails";
 import { loader as appointmentsLoader } from "./pages/appointments/Appointments";
+import { UserContextProvider } from "./context/user-context";
 
 export const router = createBrowserRouter([
   { path: "*", element: <NotFound /> },
@@ -66,9 +67,11 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <ProtectedRoute>
-        <Layout />
-      </ProtectedRoute>
+      <UserContextProvider>
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      </UserContextProvider>
     ),
     children: [
       {

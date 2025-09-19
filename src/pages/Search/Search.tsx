@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Filter, MapPin, ChevronLeft } from "lucide-react";
+import { Filter, MapPin } from "lucide-react";
 import CardDoctor from "@/components/common/CardDoctor";
 import type { IDoctorDetails, ISpecialist } from "@/types";
 import { fetchDoctorsData } from "@/api/doctors/doctors";
@@ -114,7 +114,7 @@ const Search = () => {
         <div className="flex items-center gap-4">
           <button
             onClick={toggleFilter}
-            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 border cursor-pointer border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors"
           >
             <Filter size={16} />
             <span className="text-sm text-gray-600">Filter</span>
@@ -122,7 +122,7 @@ const Search = () => {
           <GoBackButton />
         </div>
 
-        <div className="flex-1 lg:max-w-md">
+        <div className="flex-1">
           <input
             type="text"
             placeholder="Search doctors..."
@@ -268,7 +268,7 @@ const Search = () => {
                 <button
                   key={specialty.id}
                   onClick={() => toggleSpecialty(specialty.name_en)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-colors ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-colors cursor-pointer ${
                     selectedSpecialties.includes(specialty.name_en)
                       ? "bg-blue-600 text-white border-blue-600"
                       : "bg-white text-gray-600 border-gray-300 hover:border-gray-400"
@@ -312,7 +312,7 @@ const Search = () => {
               title="Previous"
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="px-4 py-2 border rounded-lg bg-white disabled:opacity-50"
+              className="px-4 py-2 border rounded-lg bg-white disabled:opacity-50 cursor-pointer"
             >
               Prev
             </button>
@@ -323,7 +323,7 @@ const Search = () => {
                 title={`Page ${index + 1}`}
                 key={index + 1}
                 onClick={() => handlePageChange(index + 1)}
-                className={`px-4 py-2 border rounded-lg ${
+                className={`px-4 py-2 border rounded-lg cursor-pointer ${
                   currentPage === index + 1
                     ? "bg-blue-600 text-white border-blue-600"
                     : "bg-white text-gray-600 border-gray-300"
@@ -338,7 +338,7 @@ const Search = () => {
               title="Next"
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 border rounded-lg bg-white disabled:opacity-50"
+              className="px-4 py-2 border rounded-lg bg-white disabled:opacity-50 cursor-pointer"
             >
               Next
             </button>

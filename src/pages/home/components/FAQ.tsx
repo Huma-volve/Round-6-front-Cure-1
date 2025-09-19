@@ -63,10 +63,10 @@ export default function FAQ() {
               key={item.id}
               className="bg-secondary-100 mb-2 px-5 border-none rounded-md"
             >
-              <AccordionTrigger className="text-sm md:text-lg font-medium">
+              <AccordionTrigger className="text-sm md:text-lg font-medium cursor-pointer">
                 {item.question}
               </AccordionTrigger>
-              <AccordionContent className="text-sm">
+              <AccordionContent className="text-sm cursor-pointer">
                 {item.answer}
               </AccordionContent>
             </AccordionItem>
