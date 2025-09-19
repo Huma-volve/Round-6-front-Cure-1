@@ -48,11 +48,11 @@ const faqData = [
 export default function FAQ() {
   return (
     <>
-      <div className="w-full md:w-[60%] mx-auto">
-        <div className="py-1 px-5 text-primary bg-primary/10 rounded-full w-fit mx-auto">
+      <div className="w-full md:w-[60%] mx-auto mb-10">
+        <div className="text-sm md:text-lg py-1 px-5 text-primary bg-primary/10 rounded-full w-fit mx-auto">
           Frequently Asked Questions
         </div>
-        <h2 className="md:text-3xl text-xl font-semibold text-center mt-2 mb-10">
+        <h2 className="md:text-3xl text-xl font-semibold text-center mt-4 mb-10">
           Got Questions ? We’ve got Answers!
         </h2>
 
@@ -63,7 +63,7 @@ export default function FAQ() {
               key={item.id}
               className="bg-secondary-100 mb-2 px-5 border-none rounded-md"
             >
-              <AccordionTrigger className="text-lg font-medium">
+              <AccordionTrigger className="text-sm md:text-lg font-medium">
                 {item.question}
               </AccordionTrigger>
               <AccordionContent className="text-sm">
