@@ -53,7 +53,7 @@ export default function TopRated() {
   };
 
   return (
-    <div className="w-full px-4 md:px-8 py-10">
+    <div className="w-full py-10">
       <div className="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto mb-8">
         <div className="text-center md:text-left mb-6 md:mb-0">
           <h2 className="text-xl md:text-3xl font-semibold text-gray-800">

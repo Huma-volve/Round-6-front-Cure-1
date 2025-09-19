@@ -58,7 +58,7 @@ export default function Hero() {
                 fill="#145DB8"
               />
             </svg>
-            <p className="text-md font-medium">Upgrade your account</p>
+            <p className="text-md">Upgrade your account</p>
           </div>
 
           <h1 className="text-lg md:text-4xl z-40">
