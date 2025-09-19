@@ -25,12 +25,8 @@ function CardDoctor({
   const [toggleHeart, setToggleHeart] = useState(isFavourite);
   return (
     <>
-      <Link
-        to={`details/${doctor.user_id}`}
-        key={doctor.doctor_profile_id}
-        className="bg-white m-w-[84%] rounded-lg shadow-sm border border-gray-200 p-3 hover:shadow-md transition-shadow"
-      >
-        <div className="flex items-start gap-4 mb-4">
+      <div className="border border-gray-300 p-4 rounded-lg text-xs lg:text-base">
+        <div className="flex items-start gap-4 mb-2">
           <img
             src={doctorPhoto}
             alt={doctor.name}
@@ -39,41 +35,44 @@ function CardDoctor({
           <div className="flex-1 min-w-0">
             <div className="flex justify-between">
               <div>
-                <h3 className="font-medium text-gray-900 truncate">
-                  {doctor.name}
-                </h3>
-                <p className="text-sm text-gray-600">
+                <h3 className="font-medium text-gray-900">{doctor.name}</h3>
+                <p className="text-sm text-gray-600 my-2">
                   {doctor.specialty_name_en} | {doctor.hospital_name}
                 </p>
               </div>
-              <button
-                type="button"
-                title="Heart"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onToggleFavourite?.(doctor.doctor_profile_id);
-                  setToggleHeart((prev) => !prev);
-                }}
-              >
-                <Heart
-                  size={30}
-                  className={`${
-                    toggleHeart ? "fill-red-500 text-red-500" : "text-gray-600"
-                  } cursor-pointer`}
-                />
-              </button>
+              {/* hidden if router is /  */}
+              {location.pathname !== "/" && (
+                <button
+                  type="button"
+                  title="Heart"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onToggleFavourite?.(doctor.doctor_profile_id);
+                    setToggleHeart((prev) => !prev);
+                  }}
+                >
+                  <Heart
+                    size={30}
+                    className={`${
+                      toggleHeart
+                        ? "fill-red-500 text-red-500"
+                        : "text-gray-600"
+                    } cursor-pointer`}
+                  />
+                </button>
+              )}
             </div>
 
-            <div className="flex gap-14 items-center mt-2">
+            <div className="flex flex-col sm:flex-row text-xs gap-2 sm:items-center">
               <div className="flex items-center gap-1">
                 <Star size={14} className="fill-yellow-400 text-yellow-400" />
-                <span className="text-sm font-medium">
+                <span className="font-medium">
                   {Number(doctor.average_rating).toFixed(1)}
                 </span>
               </div>
               <div className="flex items-center gap-1">
                 <Clock size={16} className="text-gray-400" />
-                <span className="text-sm text-black">
+                <span className="font-medium">
                   <span>
                     {formatTime(doctor.start_time)} -{" "}
                     {formatTime(doctor.end_time)}
@@ -84,22 +83,24 @@ function CardDoctor({
           </div>
         </div>
 
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-base text-black">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-md font-medium text-black">
             Price<span className="text-sm text-gray-400">/hour</span>
           </span>
-          <span className="text-lg font-semibold text-orange-500">
+          <span className="text-md font-semibold text-orange-500">
             ${doctor.price_per_hour}
           </span>
         </div>
 
-        <button
-          type="button"
-          className="w-full text-white cursor-pointer bg-primary py-2 px-4 rounded-lg hover:bg-primary-100 transition-colors font-medium"
-        >
-          Book appointment
-        </button>
-      </Link>
+        <Link to={`details/${doctor.user_id}`} key={doctor.doctor_profile_id}>
+          <button
+            type="button"
+            className="w-full text-white cursor-pointer bg-primary py-2 px-4 rounded-lg hover:bg-primary-100 transition-colors font-medium"
+          >
+            Book appointment
+          </button>
+        </Link>
+      </div>
     </>
   );
 }
