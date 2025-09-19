@@ -64,6 +64,32 @@ export const getDoctorReviews = async (link: string) => {
     }
 };
 
+// POST REVIEW
+export const addReview = async (reviewData: {
+    doctorId: number;
+    rating: number;
+    comment: string;
+}) => {
+    try {
+        const response = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}doctors/${
+                reviewData.doctorId
+            }/reviews`,
+            { rating: reviewData.rating, comment: reviewData.comment },
+            {
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 // GET DOCTOR AVAILABLE SLOTS
 export const getAvailableSlots = async (id: string) => {
     try {

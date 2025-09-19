@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import RatingStars from "./RatingStars";
 import ReviewCard from "./ReviewCard";
@@ -46,13 +46,13 @@ function DoctorReviews({ doctorId, reviewsCount, rating }: DoctorReviewsProps) {
         <section className="mt-8 flex flex-col gap-4 flex-1">
             <header className="flex items-center justify-between">
                 <h2 className="font-medium text-lg">Reviews and Rating</h2>
-                <Button
-                    variant="ghost"
-                    className="cursor-pointer text-primary-100 hover:bg-transparent focus:bg-transparent"
+                <Link
+                    to={`/doctors/${doctorId}/review`}
+                    className="flex items-center gap-1 cursor-pointer text-primary-100 hover:text-primary-200 focus:text-primary-200"
                 >
-                    <Pencil />
+                    <Pencil size={18} />
                     <span>add review</span>
-                </Button>
+                </Link>
             </header>
 
             <div className="flex items-center justify-between gap-2">

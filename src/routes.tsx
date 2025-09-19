@@ -104,7 +104,7 @@ export const router = createBrowserRouter([
                 element: <Notifications />,
             },
             {
-                path: "/doctor/:id/review",
+                path: "/doctors/:doctorId/review",
                 element: <Review />,
             },
             {

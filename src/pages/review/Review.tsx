@@ -1,4 +1,8 @@
 import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+
 import { ChevronLeft, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,39 +12,52 @@ import {
     DialogTitle,
     DialogFooter,
 } from "@/components/ui/dialog";
-import { useNavigate, useParams } from "react-router-dom";
-import { getDoctorReviews } from "@/api/doctors/doctors";
+import { addReview } from "@/api/doctors/doctors";
 
 export default function ReviewPage() {
     const [rating, setRating] = React.useState<number>(1);
     const [hover, setHover] = React.useState<number | null>(null);
     const [text, setText] = React.useState("");
     const [open, setOpen] = React.useState(false);
-    const nav = useNavigate();
     const display = hover ?? rating;
-    const { id } = useParams();
+    const { doctorId } = useParams();
+    const navigate = useNavigate();
+
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        const success = await doctorReview({
-            id: Number(id),
-            rating,
-            comment: text,
-        });
-
-        if (success) {
+        try {
+            await addReview({
+                doctorId: Number(doctorId),
+                rating,
+                comment: text,
+            });
             setOpen(true);
+            navigate(`/doctors/${doctorId}`);
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                toast(error.response?.data?.message);
+            } else {
+                toast(
+                    "An unexpected error occurred. Cannot make an appointment."
+                );
+            }
         }
     }
-
 
     return (
         <div className="min-h-screen bg-white">
             <div className="mx-auto w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl px-4 md:px-6">
-
                 <div className="flex items-center gap-2 py-3 md:py-4">
-                    <button type="button" aria-label="Back" className="-ml-2 rounded-full p-2 hover:bg-zinc-100" >
-                        <ChevronLeft className="h-5 w-5 text-zinc-700 sm:h-6 sm:w-6" onClick={() => nav(-1)} />
+                    <button
+                        type="button"
+                        aria-label="Back"
+                        className="-ml-2 rounded-full p-2 hover:bg-zinc-100"
+                    >
+                        <ChevronLeft
+                            className="h-5 w-5 text-zinc-700 sm:h-6 sm:w-6"
+                            onClick={() => navigate(-1)}
+                        />
                     </button>
                     <h1 className="mx-auto font-semibold text-zinc-900 text-lg sm:text-xl md:text-2xl">
                         Review
@@ -50,9 +67,10 @@ export default function ReviewPage() {
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="pb-10">
-
                     <section className="mt-1 md:mt-2">
-                        <p className="text-sm md:text-base font-semibold text-zinc-900">Your Rate</p>
+                        <p className="text-sm md:text-base font-semibold text-zinc-900">
+                            Your Rate
+                        </p>
                         <div className="mt-2 md:mt-3 flex items-center justify-between">
                             <div className="flex items-center gap-1.5 md:gap-2">
                                 {[1, 2, 3, 4, 5].map((i) => {
@@ -68,21 +86,31 @@ export default function ReviewPage() {
                                             aria-label={`Rate ${i} of 5`}
                                         >
                                             <Star
-                                                className={`h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 ${active ? "text-yellow-400" : "text-zinc-300"}`}
-                                                fill={active ? "#FACC15" : "none"}
+                                                className={`h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 ${
+                                                    active
+                                                        ? "text-yellow-400"
+                                                        : "text-zinc-300"
+                                                }`}
+                                                fill={
+                                                    active ? "#FACC15" : "none"
+                                                }
                                                 strokeWidth={1.5}
                                             />
                                         </button>
                                     );
                                 })}
                             </div>
-                            <div className="select-none text-2xl sm:text-3xl font-semibold text-zinc-900">{display}/5</div>
+                            <div className="select-none text-2xl sm:text-3xl font-semibold text-zinc-900">
+                                {display}/5
+                            </div>
                         </div>
                     </section>
 
                     {/* review */}
                     <section className="mt-6 md:mt-8">
-                        <p className="text-sm md:text-base font-semibold text-zinc-900">Your review</p>
+                        <p className="text-sm md:text-base font-semibold text-zinc-900">
+                            Your review
+                        </p>
                         <textarea
                             className="mt-2 h-40 sm:h-44 md:h-48 w-full resize-none rounded-2xl border border-zinc-300 px-4 py-3 text-sm md:text-base text-zinc-800 outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-200"
                             placeholder="Write your review"
@@ -93,7 +121,10 @@ export default function ReviewPage() {
 
                     {/*  */}
                     <div className="mt-6 md:mt-8 mb-6">
-                        <Button type="submit" className="w-full h-11 sm:h-12 rounded-xl text-sm sm:text-base bg-blue-600 hover:bg-blue-700">
+                        <Button
+                            type="submit"
+                            className="w-full h-11 sm:h-12 rounded-xl text-sm sm:text-base bg-blue-600 hover:bg-blue-700"
+                        >
                             Send your review
                         </Button>
                     </div>
