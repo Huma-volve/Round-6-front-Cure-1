@@ -38,7 +38,9 @@ export const PrivacyPage: React.FC = () => {
                 const [titleLine, ...rest] = block.split("\n");
                 return (
                     <section key={i} className="space-y-1">
-                        <h3 className="font-semibold text-zinc-900">{titleLine}</h3>
+                        <h3 className="font-semibold text-zinc-900">
+                            {titleLine}
+                        </h3>
                         <p className="text-sm leading-6 text-zinc-600">
                             {rest.join(" ")}
                         </p>
@@ -56,7 +58,6 @@ export const PrivacyPage: React.FC = () => {
     return (
         <div className="min-h-screen bg-white">
             <div className="mx-auto max-w-md sm:max-w-lg md:max-w-xl px-4 py-4">
-
                 <div className="flex items-center gap-2 pb-4">
                     <button
                         type="button"
@@ -72,21 +73,21 @@ export const PrivacyPage: React.FC = () => {
                     <div className="w-9" />
                 </div>
 
-
                 {loading && (
                     <div className="space-y-3">
                         <div className="h-5 w-40 rounded bg-zinc-100 animate-pulse" />
                         {[...Array(6)].map((_, i) => (
-                            <div key={i} className="h-3 w-full rounded bg-zinc-100 animate-pulse" />
+                            <div
+                                key={i}
+                                className="h-3 w-full rounded bg-zinc-100 animate-pulse"
+                            />
                         ))}
                     </div>
                 )}
 
-
                 {!loading && error && (
                     <p className="text-sm text-rose-600">{error}</p>
                 )}
-
 
                 {!loading && !error && data && (
                     <article className="space-y-5">

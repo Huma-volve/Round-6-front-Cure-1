@@ -3,14 +3,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getFormattedDate, getInitials } from "@/lib/utils";
 import type { IReview } from "@/types";
 import { Star } from "lucide-react";
-import userPlaceholder from "@/assets/images/user-vector.avif";
+import userPlaceholder from "@/assets/images/user-placeholder.png";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/ui/Card";
+} from "@/components/ui/card";
 
 type ReviewCardProps = {
     review: IReview;

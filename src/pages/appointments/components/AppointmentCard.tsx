@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { getInitials } from "@/lib/utils";
 import type { ISpeciality, IAppointment } from "@/types";
-import doctorPlaceholderImg from "@/assets/images/doctor-placeholder.jpeg";
+import doctorPlaceholderImg from "@/assets/images/doctorPhoto.jpg";
 import { Pin } from "lucide-react";
 import { getSpeciality } from "@/api/specialities/specialities";
 import {
@@ -16,7 +16,7 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/components/ui/Card";
+} from "@/components/ui/card";
 
 type AppointmentCardProps = {
     appointment: IAppointment;

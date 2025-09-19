@@ -27,9 +27,12 @@ import {
     AddNewCardPage,
     ProtectedRoute,
     NotFound,
+    MapSearch,
+    ContactUs,
 } from "./pages/index";
 import { loader as doctorDetailsLoader } from "./pages/doctorDetails/DoctorDetails";
 import { loader as appointmentsLoader } from "./pages/appointments/Appointments";
+import { UserContextProvider } from "./context/user-context";
 
 export const router = createBrowserRouter([
     { path: "*", element: <NotFound /> },
@@ -64,9 +67,11 @@ export const router = createBrowserRouter([
     {
         path: "/",
         element: (
-            <ProtectedRoute>
-                <Layout />
-            </ProtectedRoute>
+            <UserContextProvider>
+                <ProtectedRoute>
+                    <Layout />
+                </ProtectedRoute>
+            </UserContextProvider>
         ),
         children: [
             {
@@ -134,6 +139,14 @@ export const router = createBrowserRouter([
             {
                 path: "/favourite",
                 element: <Favourite />,
+            },
+            {
+                path: "/search-map",
+                element: <MapSearch />,
+            },
+            {
+                path: "/contact-us",
+                element: <ContactUs />,
             },
         ],
     },

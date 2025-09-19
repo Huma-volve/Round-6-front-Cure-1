@@ -1,5 +1,5 @@
 // src/pages/PasswordManagementPage.tsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Eye, EyeOff } from "lucide-react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -59,7 +59,7 @@ export default function PasswordManagementPage() {
                         confirmPassword: "",
                     }}
                     validationSchema={PasswordSchema}
-                    onSubmit={async (values, { setSubmitting, resetForm }) => {
+                    onSubmit={async (_, { setSubmitting, resetForm }) => {
                         try {
                             // TODO: call API بتاع تغيير الباسورد هنا
                             // await changePassword(values)
@@ -89,14 +89,20 @@ export default function PasswordManagementPage() {
                                     <Field
                                         as="input"
                                         name="currentPassword"
-                                        type={showPassword.current ? "text" : "password"}
+                                        type={
+                                            showPassword.current
+                                                ? "text"
+                                                : "password"
+                                        }
                                         placeholder="Enter current password"
                                         autoComplete="current-password"
                                         className="w-full bg-transparent py-3 text-sm outline-none placeholder:text-zinc-400"
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => toggleVisibility("current")}
+                                        onClick={() =>
+                                            toggleVisibility("current")
+                                        }
                                         className="ml-2 text-zinc-500 hover:text-zinc-700"
                                     >
                                         {showPassword.current ? (
@@ -122,7 +128,11 @@ export default function PasswordManagementPage() {
                                     <Field
                                         as="input"
                                         name="newPassword"
-                                        type={showPassword.new ? "text" : "password"}
+                                        type={
+                                            showPassword.new
+                                                ? "text"
+                                                : "password"
+                                        }
                                         placeholder="Enter new password"
                                         autoComplete="new-password"
                                         className="w-full bg-transparent py-3 text-sm outline-none placeholder:text-zinc-400"
@@ -155,14 +165,20 @@ export default function PasswordManagementPage() {
                                     <Field
                                         as="input"
                                         name="confirmPassword"
-                                        type={showPassword.confirm ? "text" : "password"}
+                                        type={
+                                            showPassword.confirm
+                                                ? "text"
+                                                : "password"
+                                        }
                                         placeholder="Confirm new password"
                                         autoComplete="new-password"
                                         className="w-full bg-transparent py-3 text-sm outline-none placeholder:text-zinc-400"
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => toggleVisibility("confirm")}
+                                        onClick={() =>
+                                            toggleVisibility("confirm")
+                                        }
                                         className="ml-2 text-zinc-500 hover:text-zinc-700"
                                     >
                                         {showPassword.confirm ? (
@@ -186,7 +202,9 @@ export default function PasswordManagementPage() {
                                     disabled={isSubmitting}
                                     className="w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-medium text-white shadow-md hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed"
                                 >
-                                    {isSubmitting ? "Saving..." : "Change password"}
+                                    {isSubmitting
+                                        ? "Saving..."
+                                        : "Change password"}
                                 </button>
                             </div>
                         </Form>

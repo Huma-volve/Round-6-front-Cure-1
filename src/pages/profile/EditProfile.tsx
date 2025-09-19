@@ -16,8 +16,18 @@ import type { IUserData } from "../../types/index";
 import { useNavigate } from "react-router-dom";
 
 const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
 ];
 const days = Array.from({ length: 31 }, (_, i) => i + 1);
 const currentYear = new Date().getFullYear();
@@ -54,7 +64,11 @@ function parseBirthdate(iso?: string | null) {
     const day = String(Number(m[3]));
     return { day, month, year };
 }
-function buildBirthdate(y?: string | number, mName?: string, d?: string | number) {
+function buildBirthdate(
+    y?: string | number,
+    mName?: string,
+    d?: string | number
+) {
     if (!y || !mName || !d) return null;
     const idx = months.indexOf(String(mName));
     if (idx < 0) return null;
@@ -78,11 +92,18 @@ type FormValues = {
 const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Required"),
     fullName: Yup.string().min(2, "Too short").required("Required"),
-    avatar: Yup.string().url("Invalid URL").nullable().transform((v) => (v === "" ? null : v)),
-    phone: Yup.string().matches(/^[0-9]{7,15}$/, "Digits only (7–15)").required("Required"),
+    avatar: Yup.string()
+        .url("Invalid URL")
+        .nullable()
+        .transform((v) => (v === "" ? null : v)),
+    phone: Yup.string()
+        .matches(/^[0-9]{7,15}$/, "Digits only (7–15)")
+        .required("Required"),
     countryCode: Yup.string().required("Required"),
     day: Yup.mixed().required("Required"),
-    month: Yup.string().oneOf(months as unknown as string[]).required("Required"),
+    month: Yup.string()
+        .oneOf(months as unknown as string[])
+        .required("Required"),
     year: Yup.mixed().required("Required"),
 });
 
@@ -108,7 +129,11 @@ function InputWithIcon({
                     className="w-full bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400"
                 />
             </div>
-            <ErrorMessage name={name} component="div" className="mt-1 text-xs text-rose-600" />
+            <ErrorMessage
+                name={name}
+                component="div"
+                className="mt-1 text-xs text-rose-600"
+            />
         </div>
     );
 }
@@ -119,7 +144,9 @@ export default function EditProfilePage() {
     const [profile, setProfile] = React.useState<IUserData | null>(null);
 
     const fileInputRef = React.useRef<HTMLInputElement>(null);
-    const [avatarPreview, setAvatarPreview] = React.useState<string | null>(null);
+    const [avatarPreview, setAvatarPreview] = React.useState<string | null>(
+        null
+    );
     const nav = useNavigate();
     React.useEffect(() => {
         (async () => {
@@ -128,7 +155,7 @@ export default function EditProfilePage() {
                 setError(null);
                 const data = await getProfile();
                 setProfile(data.data.user);
-            } catch (e) {
+            } catch {
                 setError("Failed to load profile");
             } finally {
                 setLoading(false);
@@ -163,23 +190,33 @@ export default function EditProfilePage() {
             ? parseBirthdate(profile.birthdate as any)
             : { day: "", month: "", year: "" };
 
-        return { email, fullName, avatar, avatarFile: null, phone: local, countryCode, day, month, year };
+        return {
+            email,
+            fullName,
+            avatar,
+            avatarFile: null,
+            phone: local,
+            countryCode,
+            day,
+            month,
+            year,
+        };
     }, [profile]);
 
     async function onSubmit(values: FormValues) {
+        console.log(values);
         const birthdate = buildBirthdate(values.year, values.month, values.day);
-        const phone = `${dialFromCountry(values.countryCode)}${values.phone.replace(/\s+/g, "")}`;
-
+        const phone = `${dialFromCountry(
+            values.countryCode
+        )}${values.phone.replace(/\s+/g, "")}`;
 
         await updateProfile({
             name: values.fullName,
             email: values.email,
             phone,
             birthdate,
-            avatar: values.avatarFile as unknown as string,
+            avatar: values.avatarFile,
         });
-
-        alert("Profile updated ✔️");
     }
 
     if (loading) {
@@ -193,7 +230,10 @@ export default function EditProfilePage() {
                     </div>
                     <div className="mt-6 space-y-4">
                         {[...Array(6)].map((_, i) => (
-                            <div key={i} className="h-12 rounded-xl bg-zinc-100" />
+                            <div
+                                key={i}
+                                className="h-12 rounded-xl bg-zinc-100"
+                            />
                         ))}
                     </div>
                 </div>
@@ -221,10 +261,17 @@ export default function EditProfilePage() {
         <div className="min-h-screen bg-white">
             <div className="mx-auto w-full max-w-sm sm:max-w-md md:max-w-lg px-4 md:px-6">
                 <div className="flex items-center gap-2 py-3">
-                    <button type="button" aria-label="Back" className="-ml-2 rounded-full p-2 hover:bg-zinc-100" onClick={() => nav("/profile")}>
+                    <button
+                        type="button"
+                        aria-label="Back"
+                        className="-ml-2 rounded-full p-2 hover:bg-zinc-100"
+                        onClick={() => nav("/profile")}
+                    >
                         <ChevronLeft className="h-5 w-5 text-zinc-700" />
                     </button>
-                    <h1 className="mx-auto text-lg font-semibold text-zinc-900">Edit Profile</h1>
+                    <h1 className="mx-auto text-lg font-semibold text-zinc-900">
+                        Edit Profile
+                    </h1>
                     <div className="w-9" />
                 </div>
 
@@ -245,30 +292,36 @@ export default function EditProfilePage() {
                             <Camera className="h-4 w-4 text-zinc-700" />
                         </button>
 
-
                         <Formik
                             key={profile?.id ?? "empty-seed"}
                             initialValues={{ avatarFile: null } as any}
-                            onSubmit={() => { }}
+                            onSubmit={() => {}}
                         >
-                            {({ setFieldValue }) => (
+                            {() => (
                                 <input
                                     ref={fileInputRef}
                                     type="file"
                                     accept="image/*"
                                     className="hidden"
                                     onChange={(e) => {
-                                        const file = e.currentTarget.files?.[0] ?? null;
-                                        if (file) setAvatarPreview(URL.createObjectURL(file));
+                                        const file =
+                                            e.currentTarget.files?.[0] ?? null;
+                                        if (file)
+                                            setAvatarPreview(
+                                                URL.createObjectURL(file)
+                                            );
                                     }}
                                 />
                             )}
                         </Formik>
                     </div>
 
-                    <h2 className="mt-3 text-base font-semibold text-zinc-900">{profile.name}</h2>
+                    <h2 className="mt-3 text-base font-semibold text-zinc-900">
+                        {profile.name}
+                    </h2>
                     <p className="mt-1 flex items-center gap-1 text-xs text-zinc-500">
-                        <MapPin className="h-4 w-4" /> 129, El-Nasr Street, Cairo
+                        <MapPin className="h-4 w-4" /> 129, El-Nasr Street,
+                        Cairo
                     </p>
                 </div>
 
@@ -289,33 +342,60 @@ export default function EditProfilePage() {
                                 className="hidden"
                                 ref={fileInputRef}
                                 onChange={(e) => {
-                                    const file = e.currentTarget.files?.[0] ?? null;
+                                    const file =
+                                        e.currentTarget.files?.[0] ?? null;
                                     setFieldValue("avatarFile", file);
-                                    if (file) setAvatarPreview(URL.createObjectURL(file));
+                                    if (file)
+                                        setAvatarPreview(
+                                            URL.createObjectURL(file)
+                                        );
                                 }}
                             />
 
-                            <InputWithIcon name="email" placeholder="Email" icon={Mail} type="email" />
-                            <InputWithIcon name="fullName" placeholder="FullName" icon={UserIcon} />
+                            <InputWithIcon
+                                name="email"
+                                placeholder="Email"
+                                icon={Mail}
+                                type="email"
+                            />
+                            <InputWithIcon
+                                name="fullName"
+                                placeholder="FullName"
+                                icon={UserIcon}
+                            />
 
                             <div>
                                 <div className="flex items-center gap-2 rounded-xl border border-zinc-200 bg-zinc-100 px-2 py-2">
                                     <div className="flex items-center gap-2 rounded-lg bg-white px-2 py-2">
                                         <ReactCountryFlag
-                                            countryCode={values.countryCode || "EG"}
+                                            countryCode={
+                                                values.countryCode || "EG"
+                                            }
                                             svg
                                             aria-label={values.countryCode}
-                                            style={{ width: "1.25rem", height: "1.25rem", borderRadius: "3px" }}
+                                            style={{
+                                                width: "1.25rem",
+                                                height: "1.25rem",
+                                                borderRadius: "3px",
+                                            }}
                                             className="shadow-sm"
                                         />
                                         <select
                                             value={values.countryCode}
-                                            onChange={(e) => setFieldValue("countryCode", e.target.value)}
+                                            onChange={(e) =>
+                                                setFieldValue(
+                                                    "countryCode",
+                                                    e.target.value
+                                                )
+                                            }
                                             className="appearance-none bg-transparent pr-4 text-sm outline-none"
                                             aria-label="Country code"
                                         >
                                             {COUNTRIES.map((c) => (
-                                                <option key={c.code} value={c.code}>
+                                                <option
+                                                    key={c.code}
+                                                    value={c.code}
+                                                >
                                                     {c.dial}
                                                 </option>
                                             ))}
@@ -332,16 +412,26 @@ export default function EditProfilePage() {
                                         />
                                     </div>
                                 </div>
-                                <ErrorMessage name="phone" component="div" className="mt-1 text-xs text-rose-600" />
+                                <ErrorMessage
+                                    name="phone"
+                                    component="div"
+                                    className="mt-1 text-xs text-rose-600"
+                                />
                             </div>
 
                             <div className="pt-2">
-                                <p className="mb-2 text-sm font-semibold text-zinc-900">Select your birthday</p>
+                                <p className="mb-2 text-sm font-semibold text-zinc-900">
+                                    Select your birthday
+                                </p>
 
                                 <div className="grid grid-cols-3 gap-3">
                                     <div>
                                         <div className="flex items-center justify-between rounded-xl border border-zinc-200 bg-zinc-100 px-3 py-2">
-                                            <Field as="select" name="day" className="w-full appearance-none bg-transparent text-sm outline-none">
+                                            <Field
+                                                as="select"
+                                                name="day"
+                                                className="w-full appearance-none bg-transparent text-sm outline-none"
+                                            >
                                                 <option value="">Day</option>
                                                 {days.map((d) => (
                                                     <option key={d} value={d}>
@@ -351,12 +441,20 @@ export default function EditProfilePage() {
                                             </Field>
                                             <ChevronDown className="h-4 w-4 text-zinc-500" />
                                         </div>
-                                        <ErrorMessage name="day" component="div" className="mt-1 text-xs text-rose-600" />
+                                        <ErrorMessage
+                                            name="day"
+                                            component="div"
+                                            className="mt-1 text-xs text-rose-600"
+                                        />
                                     </div>
 
                                     <div>
                                         <div className="flex items-center justify-between rounded-xl border border-zinc-200 bg-zinc-100 px-3 py-2">
-                                            <Field as="select" name="month" className="w-full appearance-none bg-transparent text-sm outline-none">
+                                            <Field
+                                                as="select"
+                                                name="month"
+                                                className="w-full appearance-none bg-transparent text-sm outline-none"
+                                            >
                                                 <option value="">Month</option>
                                                 {months.map((m) => (
                                                     <option key={m} value={m}>
@@ -366,12 +464,20 @@ export default function EditProfilePage() {
                                             </Field>
                                             <ChevronDown className="h-4 w-4 text-zinc-500" />
                                         </div>
-                                        <ErrorMessage name="month" component="div" className="mt-1 text-xs text-rose-600" />
+                                        <ErrorMessage
+                                            name="month"
+                                            component="div"
+                                            className="mt-1 text-xs text-rose-600"
+                                        />
                                     </div>
 
                                     <div>
                                         <div className="flex items-center justify-between rounded-xl border border-zinc-200 bg-zinc-100 px-3 py-2">
-                                            <Field as="select" name="year" className="w-full appearance-none bg-transparent text-sm outline-none">
+                                            <Field
+                                                as="select"
+                                                name="year"
+                                                className="w-full appearance-none bg-transparent text-sm outline-none"
+                                            >
                                                 <option value="">Year</option>
                                                 {years.map((y) => (
                                                     <option key={y} value={y}>
@@ -381,7 +487,11 @@ export default function EditProfilePage() {
                                             </Field>
                                             <ChevronDown className="h-4 w-4 text-zinc-500" />
                                         </div>
-                                        <ErrorMessage name="year" component="div" className="mt-1 text-xs text-rose-600" />
+                                        <ErrorMessage
+                                            name="year"
+                                            component="div"
+                                            className="mt-1 text-xs text-rose-600"
+                                        />
                                     </div>
                                 </div>
                             </div>

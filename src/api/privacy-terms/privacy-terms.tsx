@@ -2,7 +2,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const TOKEN = localStorage.getItem("token");
 
 export const handleGetPrivacyPolicy = async () => {
     try {

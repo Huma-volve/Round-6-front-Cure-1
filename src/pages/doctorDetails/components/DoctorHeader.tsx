@@ -1,7 +1,7 @@
 import { BadgeCheck, Pin } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/lib/utils";
-import doctorPlaceholderImg from "@/assets/images/doctor-placeholder.jpeg";
+import doctorPlaceholderImg from "@/assets/images/doctorPhoto.jpg";
 
 type DoctorHeaderProps = {
     doctorName: string;

@@ -27,7 +27,9 @@ function PageHeader({ title, className, doctorId }: PageHeaderProps) {
             {isLikeLoading ? (
                 <Loader />
             ) : (
-                <button
+                    <button
+                        type="button"
+                        title="Heart"
                     className="hover:scale-110 transition-transform cursor-pointer"
                     onClick={() => toggleFavourite(doctorId)}
                 >

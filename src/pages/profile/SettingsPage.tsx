@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, KeyRound, UserX, Eye, EyeOff } from "lucide-react";
-import toast from "react-hot-toast";
 import {
     Dialog,
     DialogContent,
