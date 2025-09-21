@@ -80,6 +80,9 @@ function DoctorDetails() {
 }
 
 export async function loader({ params }: LoaderFunctionArgs) {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
     const { doctorId } = params;
 
     if (!doctorId) throw new Response("Doctor Id is required", { status: 400 });
