@@ -12,9 +12,6 @@ export const getProfile = async () => {
                 Authorization: `Bearer ${TOKEN}`,
             },
         });
-        if (response.status === 200) {
-            toast.success("Profile fetched successfully");
-        }
         return response.data;
     } catch (error) {
         console.error(error);

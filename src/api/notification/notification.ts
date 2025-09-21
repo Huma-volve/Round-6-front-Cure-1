@@ -12,9 +12,6 @@ export const getNotification = async () => {
                 Authorization: `Bearer ${TOKEN}`,
             },
         });
-        if (response.status === 200) {
-            toast.success("Notifications fetched successfully");
-        }
         // هنا نرجّع الـ array بتاعت النوتيفيكيشنز
         return response.data.data.data;
     } catch (error) {

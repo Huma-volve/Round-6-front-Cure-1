@@ -8,7 +8,6 @@ export const handleGetPrivacyPolicy = async () => {
         const res = await axios.get(`${BASE_URL}pages/terms-and-conditions`);
 
         if (res.status === 200) {
-            toast.success("Privacy Policy fetched successfully");
             return res.data.data;
         }
     } catch (error) {
