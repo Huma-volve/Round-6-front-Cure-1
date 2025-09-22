@@ -38,8 +38,7 @@ function Appointments() {
         fetchUserAppointments();
     }, [isDeletingAppointment]);
 
-    if (isLoading || isDeletingAppointment)
-        return <Loader className="mt-40 mx-auto" size="xl" />;
+    if (isLoading) return <Loader className="mt-40 mx-auto" size="xl" />;
     if (!userAppointments || !userAppointments?.length) return <NoData />;
 
     const filterdAppointments =
