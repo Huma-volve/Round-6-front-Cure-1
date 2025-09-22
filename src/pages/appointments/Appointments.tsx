@@ -18,6 +18,7 @@ function Appointments() {
         []
     );
     const [isLoading, setIsLoading] = useState(false);
+    const [isDeletingAppointment, setIsDeletingAppointment] = useState(false);
 
     const [searchParams, setSearchParams] = useSearchParams();
     const filterBy = searchParams.get("filter");
@@ -35,9 +36,10 @@ function Appointments() {
             }
         }
         fetchUserAppointments();
-    }, []);
+    }, [isDeletingAppointment]);
 
-    if (isLoading) return <Loader className="mt-40 mx-auto" size="xl" />;
+    if (isLoading || isDeletingAppointment)
+        return <Loader className="mt-40 mx-auto" size="xl" />;
     if (!userAppointments || !userAppointments?.length) return <NoData />;
 
     const filterdAppointments =
@@ -76,6 +78,12 @@ function Appointments() {
                                 <AppointmentCard
                                     appointment={appointment}
                                     key={appointment.id}
+                                    isDeletingAppointment={
+                                        isDeletingAppointment
+                                    }
+                                    setIsDeletingAppointment={
+                                        setIsDeletingAppointment
+                                    }
                                 />
                             )
                         )}

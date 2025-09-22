@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "date-fns";
 
@@ -23,9 +23,15 @@ import CancelConfirmation from "./CancelConfirmation";
 
 type AppointmentCardProps = {
     appointment: IAppointment;
+    isDeletingAppointment: boolean;
+    setIsDeletingAppointment: Dispatch<SetStateAction<boolean>>;
 };
 
-function AppointmentCard({ appointment }: AppointmentCardProps) {
+function AppointmentCard({
+    appointment,
+    isDeletingAppointment,
+    setIsDeletingAppointment,
+}: AppointmentCardProps) {
     const { date, time, doctor, status } = appointment;
     const [speciality, setSpeciality] = useState<ISpeciality | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -49,10 +55,14 @@ function AppointmentCard({ appointment }: AppointmentCardProps) {
 
     async function handleCancelAppointment() {
         try {
-            await cancelAppointment(appointment.id);
+            setIsDeletingAppointment(true);
+            const res = await cancelAppointment(appointment.id);
+            toast.success(res.message);
         } catch (error) {
             console.error(error);
             toast.error("Something went wrong. Cannot cancel appointment.");
+        } finally {
+            setIsDeletingAppointment(false);
         }
     }
 
@@ -109,6 +119,7 @@ function AppointmentCard({ appointment }: AppointmentCardProps) {
                     <>
                         <CancelConfirmation
                             onCancelAppointment={handleCancelAppointment}
+                            isDeletingAppointment={isDeletingAppointment}
                         >
                             <Button variant="outline" className="flex-1">
                                 Cancel

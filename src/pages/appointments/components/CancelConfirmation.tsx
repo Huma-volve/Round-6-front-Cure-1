@@ -15,11 +15,13 @@ import {
 type CancelConfirmationProps = {
     children: ReactNode;
     onCancelAppointment: () => void;
+    isDeletingAppointment: boolean;
 };
 
 function CancelConfirmation({
     children,
     onCancelAppointment,
+    isDeletingAppointment,
 }: CancelConfirmationProps) {
     return (
         <AlertDialog>
@@ -35,9 +37,14 @@ function CancelConfirmation({
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={onCancelAppointment}>
-                        Continue
+                    <AlertDialogCancel disabled={isDeletingAppointment}>
+                        Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                        onClick={onCancelAppointment}
+                        disabled={isDeletingAppointment}
+                    >
+                        {isDeletingAppointment ? "Deleting" : "Continue"}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

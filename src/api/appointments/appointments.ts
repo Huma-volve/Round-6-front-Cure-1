@@ -52,6 +52,7 @@ export const cancelAppointment = async (appointmentId: number) => {
             `${
                 import.meta.env.VITE_BASE_URL
             }appointments/${appointmentId}/cancel`,
+            null,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
