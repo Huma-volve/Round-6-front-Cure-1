@@ -17,6 +17,9 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { cancelAppointment } from "@/api/appointments/appointments";
+import toast from "react-hot-toast";
+import CancelConfirmation from "./CancelConfirmation";
 
 type AppointmentCardProps = {
     appointment: IAppointment;
@@ -43,6 +46,15 @@ function AppointmentCard({ appointment }: AppointmentCardProps) {
 
         fetchSpeciality();
     }, []);
+
+    async function handleCancelAppointment() {
+        try {
+            await cancelAppointment(appointment.id);
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong. Cannot cancel appointment.");
+        }
+    }
 
     return (
         <Card className="w-full max-w-sm gap-2">
@@ -93,15 +105,43 @@ function AppointmentCard({ appointment }: AppointmentCardProps) {
             </CardContent>
 
             <CardFooter className="flex items-center gap-4 mt-2">
-                <Button variant="outline" className="flex-1">
-                    Cancel
-                </Button>
-                <Button
-                    className="flex-1"
-                    onClick={() => navigate(`/doctors/${doctor.id}`)}
-                >
-                    Reschedule
-                </Button>
+                {status === "upcoming" || status === "pending" ? (
+                    <>
+                        <CancelConfirmation
+                            onCancelAppointment={handleCancelAppointment}
+                        >
+                            <Button variant="outline" className="flex-1">
+                                Cancel
+                            </Button>
+                        </CancelConfirmation>
+                        <Button
+                            className="flex-1"
+                            onClick={() => navigate(`/doctors/${doctor.id}`)}
+                        >
+                            Reschedule
+                        </Button>
+                    </>
+                ) : status === "completed" ? (
+                    <>
+                        <Button
+                            variant="outline"
+                            className="flex-1"
+                            onClick={() => navigate(`/doctors/${doctor.id}`)}
+                        >
+                            Book again
+                        </Button>
+                        <Button
+                            className="flex-1"
+                            onClick={() =>
+                                navigate(`/doctors/${doctor.id}/review`)
+                            }
+                        >
+                            Feedback
+                        </Button>
+                    </>
+                ) : (
+                    <></>
+                )}
             </CardFooter>
         </Card>
     );

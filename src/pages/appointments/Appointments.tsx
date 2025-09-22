@@ -69,7 +69,7 @@ function Appointments() {
                 ) : (
                     <TabsContent
                         value={filterBy || "all"}
-                        className="flex flex-wrap items-center gap-6 justify-center xl:justify-start"
+                        className="flex flex-wrap gap-6 justify-center xl:justify-start"
                     >
                         {filterdAppointments.map(
                             (appointment: IAppointment) => (
