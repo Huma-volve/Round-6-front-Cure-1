@@ -4,6 +4,7 @@ import doctorPhoto from "../../assets/images/doctorPhoto.jpg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+
 type DoctorCardProps = {
     doctor: IDoctorDetails;
     isFavourite: boolean;
