@@ -1,11 +1,11 @@
 import { Star, Clock, Heart } from "lucide-react";
-import type { IFavouriteDoctor } from "../../types";
+import type { IDoctorDetails } from "../../types";
 import doctorPhoto from "../../assets/images/doctorPhoto.jpg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
 type DoctorCardProps = {
-    doctor: IFavouriteDoctor;
+    doctor: IDoctorDetails;
     isFavourite: boolean;
     onToggleFavourite?: (id: number) => void;
 };
@@ -53,9 +53,7 @@ function CardDoctor({
                                     title="Heart"
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        onToggleFavourite?.(
-                                            doctor.doctor_profile_id
-                                        );
+                                        onToggleFavourite?.(doctor.user_id);
                                         setToggleHeart((prev) => !prev);
                                     }}
                                 >
@@ -85,8 +83,13 @@ function CardDoctor({
                                 <Clock size={16} className="text-gray-400" />
                                 <span className="font-medium">
                                     <span>
-                                        {formatTime(doctor.start_time)} -{" "}
-                                        {formatTime(doctor.end_time)}
+                                        {formatTime(
+                                            doctor.availability[0].start_time
+                                        )}{" "}
+                                        -{" "}
+                                        {formatTime(
+                                            doctor.availability[0].end_time
+                                        )}
                                     </span>
                                 </span>
                             </div>
@@ -104,10 +107,7 @@ function CardDoctor({
                     </span>
                 </div>
 
-                <Link
-                    to={`/doctors/${doctor.doctor_profile_id}`}
-                    key={doctor.doctor_profile_id}
-                >
+                <Link to={`/doctors/${doctor.user_id}`} key={doctor.user_id}>
                     <button
                         type="button"
                         className="w-full text-white cursor-pointer bg-primary py-2 px-4 rounded-lg hover:bg-primary/80 transition-colors font-medium"

@@ -17,7 +17,6 @@ function PageHeader({ title, className, doctorId }: PageHeaderProps) {
     } = useFavourites();
 
     const isDoctorFavourite = favouritesIDs.includes(doctorId);
-    console.log(doctorId);
 
     return (
         <header
