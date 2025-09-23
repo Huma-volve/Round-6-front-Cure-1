@@ -25,19 +25,22 @@ export type IDoctorDetails = {
   specialty_description: string;
   hospital_id: number;
   hospital_name: string;
+  hospital_city: string;
   hospital_start_time: string;
   hospital_end_time: string;
-  availability_id: number;
-  day: string;
-  start_time: string;
-  end_time: string;
   average_rating: number;
+  reviews_count: number;
   address?: string;
   lat?: number;
   lng?: number;
-  hospital_city:string;
- reviews_count: number;
+  availability: {
+    availability_id: number;
+    day: string;
+    start_time: string;
+    end_time: string;
+  }[];
 };
+
 
 export type IFavouriteDoctor = {
     doctor_profile_id: number;
