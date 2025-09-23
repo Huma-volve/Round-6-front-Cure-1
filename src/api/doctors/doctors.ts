@@ -1,12 +1,12 @@
 import axios from "axios";
 
-import type { IDoctorDetails } from "@/types";
+import type { IFavouriteDoctor } from "@/types";
 
 // const TOKEN = import.meta.env.VITE_TOKEN_DOCTOR;
 // const TOKEN = localStorage.getItem("token") ?? "";
 
 // GET DOCTORS DATA
-export const fetchDoctorsData = async (): Promise<IDoctorDetails[]> => {
+export const fetchDoctorsData = async (): Promise<IFavouriteDoctor[]> => {
     const response = await fetch(
         "https://round5-online-booking-with-doctor-api.huma-volve.com/api/doctors",
         {
@@ -24,7 +24,7 @@ export const fetchDoctorsData = async (): Promise<IDoctorDetails[]> => {
     }
 
     const data = await response.json();
-    return data.data as IDoctorDetails[];
+    return data.data as IFavouriteDoctor[];
 };
 
 // GET DOCTOR DETAILS
