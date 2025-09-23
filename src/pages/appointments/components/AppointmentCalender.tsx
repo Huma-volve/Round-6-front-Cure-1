@@ -1,4 +1,4 @@
-import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 import {
     Accordion,
@@ -9,9 +9,12 @@ import {
 import { Calendar1Icon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 
-function AppointmentCalender() {
-    const [dates, setDates] = useState<Date[] | undefined>(undefined);
+type AppointmentCalenderProps = {
+    dates: Date[] | undefined;
+    setDates: Dispatch<SetStateAction<Date[] | undefined>>;
+};
 
+function AppointmentCalender({ dates, setDates }: AppointmentCalenderProps) {
     return (
         <Accordion type="single" collapsible className="absolute right-0 top-0">
             <AccordionItem value="item-1" className="flex flex-col">

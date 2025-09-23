@@ -1,9 +1,6 @@
-import {
-    useLoaderData,
-    useNavigation,
-    useSearchParams,
-    type LoaderFunctionArgs,
-} from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { isSameDay } from "date-fns";
 
 import { getUserAppointments } from "@/api/appointments/appointments";
 import AppointmentCard from "./components/AppointmentCard";
@@ -15,14 +12,43 @@ import AppointmentCalender from "./components/AppointmentCalender";
 import NoData from "@/components/common/NoData";
 
 function Appointments() {
-    const { userAppointmentsRes } = useLoaderData();
-    const userAppointments = userAppointmentsRes.appointments;
+    const [dates, setDates] = useState<Date[] | undefined>(undefined);
+
+    const [userAppointments, setUserAppointments] = useState<IAppointment[]>(
+        []
+    );
+    const [isLoading, setIsLoading] = useState(false);
+    const [isDeletingAppointment, setIsDeletingAppointment] = useState(false);
 
     const [searchParams, setSearchParams] = useSearchParams();
     const filterBy = searchParams.get("filter");
 
-    const navigation = useNavigation();
-    const isLoading = navigation.state === "loading";
+    useEffect(() => {
+        async function fetchUserAppointments() {
+            try {
+                setIsLoading(true);
+                const res = await getUserAppointments(filterBy);
+                setUserAppointments(res.appointments);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchUserAppointments();
+    }, [isDeletingAppointment]);
+
+    if (isLoading) return <Loader className="mt-40 mx-auto" size="xl" />;
+    if (!userAppointments || !userAppointments?.length) return <NoData />;
+
+    const filterdAppointments =
+        dates && dates.length > 0 && userAppointments
+            ? userAppointments.filter((appointment: IAppointment) =>
+                  dates?.some((date) =>
+                      isSameDay(new Date(appointment.date), new Date(date))
+                  )
+              )
+            : userAppointments;
 
     return (
         <div className="relative">
@@ -30,7 +56,7 @@ function Appointments() {
                 <h1 className="font-medium text-base sm:text-lg mb-4">
                     Your appointments
                 </h1>
-                <AppointmentCalender />
+                <AppointmentCalender dates={dates} setDates={setDates} />
             </div>
 
             <Tabs
@@ -39,34 +65,32 @@ function Appointments() {
             >
                 <AppointmentFilterTabs />
 
-                {isLoading ? (
-                    <Loader className="mt-40 mx-auto" size="xl" />
-                ) : userAppointments.length === 0 ? (
+                {filterdAppointments.length === 0 ? (
                     <NoData />
                 ) : (
                     <TabsContent
                         value={filterBy || "all"}
-                        className="flex flex-wrap items-center gap-6 justify-center xl:justify-start"
+                        className="flex flex-wrap gap-6 justify-center xl:justify-start"
                     >
-                        {userAppointments.map((appointment: IAppointment) => (
-                            <AppointmentCard
-                                appointment={appointment}
-                                key={appointment.id}
-                            />
-                        ))}
+                        {filterdAppointments.map(
+                            (appointment: IAppointment) => (
+                                <AppointmentCard
+                                    appointment={appointment}
+                                    key={appointment.id}
+                                    isDeletingAppointment={
+                                        isDeletingAppointment
+                                    }
+                                    setIsDeletingAppointment={
+                                        setIsDeletingAppointment
+                                    }
+                                />
+                            )
+                        )}
                     </TabsContent>
                 )}
             </Tabs>
         </div>
     );
-}
-
-export async function loader({ request }: LoaderFunctionArgs) {
-    const url = new URL(request.url);
-    const filterBy = url.searchParams.get("filter");
-    const userAppointmentsRes = await getUserAppointments(filterBy);
-
-    return { userAppointmentsRes };
 }
 
 export default Appointments;

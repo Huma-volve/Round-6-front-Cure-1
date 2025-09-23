@@ -34,6 +34,8 @@ const SelectedDoctorPopup: React.FC<SelectedDoctorPopupProps> = ({
           </div>
         </div>
         <button
+          type="button"
+          title="Close"
           onClick={onClose}
           className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors"
         >
