@@ -34,9 +34,12 @@ const MapSearch = () => {
       !mapRef.current
     ) {
       const setupMap = async () => {
-        const map = await initializeMap(doctors, (doctorWithCoords: any) => {
-          setSelectedDoctor(doctorWithCoords);
-        });
+        const map = await initializeMap(
+          doctors,
+          (doctorWithCoords: IDoctorDetails) => {
+            setSelectedDoctor(doctorWithCoords);
+          }
+        );
         mapRef.current = map;
       };
 
