@@ -59,11 +59,11 @@ const SelectedDoctorPopup: React.FC<SelectedDoctorPopupProps> = ({
             <Clock className="w-4 h-4" />
             <div className="flex flex-col sm:flex-row sm:space-x-1">
               <span className="font-medium">
-                {formatTime(selectedDoctor.start_time)}
+                {formatTime(selectedDoctor.availability[0].start_time)}
               </span>
               <span className="hidden sm:inline">-</span>
               <span className="font-medium">
-                {formatTime(selectedDoctor.end_time)}
+                {formatTime(selectedDoctor.availability[0].end_time)}
               </span>
             </div>
           </div>
