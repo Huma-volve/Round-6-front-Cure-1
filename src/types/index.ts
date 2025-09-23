@@ -11,28 +11,32 @@ export type IUserData = {
 };
 
 export type IDoctorDetails = {
-    about: string;
-    experience_years: number;
-    price_per_hour: string;
-    user_id: number;
-    name: string;
-    email: string;
-    phone: string;
-    specialty_id: number;
-    specialty_name_en: string;
-    specialty_name_ar: string;
-    specialty_description: string;
-    hospital_id: number;
-    hospital_name: string;
-    hospital_city: string;
-    hospital_start_time: string;
-    hospital_end_time: string;
-    availability_id: number;
-    day: string;
-    start_time: string;
-    end_time: string;
-    average_rating: string;
-    reviews_count: number;
+  doctor_profile_id: number;
+  about: string;
+  experience_years: number;
+  price_per_hour: string;
+  user_id: number;
+  name: string;
+  email: string;
+  phone: string;
+  specialty_id: number;
+  specialty_name_en: string;
+  specialty_name_ar: string;
+  specialty_description: string;
+  hospital_id: number;
+  hospital_name: string;
+  hospital_start_time: string;
+  hospital_end_time: string;
+  availability_id: number;
+  day: string;
+  start_time: string;
+  end_time: string;
+  average_rating: number;
+  address?: string;
+  lat?: number;
+  lng?: number;
+  hospital_city:string;
+ reviews_count: number;
 };
 
 export type IFavouriteDoctor = {
