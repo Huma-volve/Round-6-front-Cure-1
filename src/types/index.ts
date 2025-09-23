@@ -35,6 +35,7 @@ export type IDoctorDetails = {
   address?: string;
   lat?: number;
   lng?: number;
+  hospital_city:string;
 };
 
 

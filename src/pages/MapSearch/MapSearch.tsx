@@ -77,7 +77,7 @@ const MapSearch = () => {
               <MapDoctorCard
                 key={doctor.user_id}
                 doctor={doctor}
-                isSelected={selectedDoctor?.user_id === doctor.user_id}
+                isSelected={selectedDoctor?.user_id == doctor.user_id}
                 onSelect={handleSelectDoctor}
               />
             ))}
