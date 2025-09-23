@@ -7,7 +7,6 @@ import noFavourite from "../../assets/images/no-favorite.png";
 
 export default function Favourite() {
     const { AllFavourites, toggleFavourite, loading } = useFavourites();
-    console.log(AllFavourites);
 
     return (
         <div>

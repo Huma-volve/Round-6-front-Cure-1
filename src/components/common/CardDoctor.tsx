@@ -25,7 +25,6 @@ function CardDoctor({
     onToggleFavourite,
 }: DoctorCardProps) {
     const [toggleHeart, setToggleHeart] = useState(isFavourite);
-    console.log(doctor);
 
     return (
         <>
@@ -85,15 +84,10 @@ function CardDoctor({
                             <div className="flex items-center gap-1">
                                 <Clock size={16} className="text-gray-400" />
                                 <span className="font-medium">
-                                    {/* <span>
-                                        {formatTime(
-                                            doctor.availability[0].start_time
-                                        )}{" "}
-                                        -{" "}
-                                        {formatTime(
-                                            doctor.availability[0].end_time
-                                        )}
-                                    </span> */}
+                                    <span>
+                                        {formatTime(doctor.start_time)} -{" "}
+                                        {formatTime(doctor.end_time)}
+                                    </span>
                                 </span>
                             </div>
                         </div>
