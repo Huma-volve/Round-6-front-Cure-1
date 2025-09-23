@@ -7,6 +7,8 @@ import noFavourite from "../../assets/images/no-favorite.png";
 
 export default function Favourite() {
     const { AllFavourites, toggleFavourite, loading } = useFavourites();
+    console.log(AllFavourites);
+
     return (
         <div>
             <div className="flex items-center gap-2">
@@ -31,7 +33,7 @@ export default function Favourite() {
                             key={favourite.doctor_profile_id}
                             doctor={favourite}
                             onToggleFavourite={() =>
-                                toggleFavourite(favourite.doctor_profile_id)
+                                toggleFavourite(favourite?.doctor_profile_id)
                             }
                             isFavourite={true}
                         />

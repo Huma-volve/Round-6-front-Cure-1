@@ -2,14 +2,14 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const TOKEN = localStorage.getItem("token") || import.meta.env.VITE_TOKEN;
+// const TOKEN = localStorage.getItem("token") || "";
 
 export const getNotification = async () => {
     try {
         const response = await axios.get(`${BASE_URL}notifications`, {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${TOKEN}`,
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         });
         // هنا نرجّع الـ array بتاعت النوتيفيكيشنز
