@@ -30,15 +30,15 @@ export type IDoctorDetails = {
   hospital_end_time: string;
   average_rating: string;
   reviews_count: number;
-  address?: string;
-  lat?: number;
-  lng?: number;
   availability: {
     availability_id: number;
     day: string;
     start_time: string;
     end_time: string;
   }[];
+  lat?: number;
+  lng?: number;
+  address?: string;
 };
 
 export type IFavouriteDoctor = {
@@ -65,12 +65,9 @@ export type IFavouriteDoctor = {
   end_time: string;
   average_rating: string;
   reviews_count: number;
-  availability: {
-    availability_id: number;
-    day: string;
-    start_time: string;
-    end_time: string;
-  }[];
+  lat?: number;
+  lng?: number;
+  address?: string;
 };
 
 export type ISpecialist = {

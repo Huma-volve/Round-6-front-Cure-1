@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { MapPin } from "lucide-react";
-import type { IDoctorDetails } from "@/types";
+import type { IDoctorDetails, IFavouriteDoctor } from "@/types";
 import { fetchDoctorsData } from "@/api/doctors/doctors";
 import MapDoctorCard from "@/components/common/MapDoctorCard";
 
@@ -8,16 +8,19 @@ import { initializeMap, updateMapView } from "@/api/search/search";
 import SelectedDoctorPopup from "@/components/common/SelectedDoctorPopup";
 
 const MapSearch = () => {
-  const [doctors, setDoctors] = useState<IDoctorDetails[]>([]);
-  const mapRef = useRef<L.Map | null>(null);
-  const [selectedDoctor, setSelectedDoctor] = useState<IDoctorDetails | null>(
-    null
+  const [doctors, setDoctors] = useState<IDoctorDetails[] | IFavouriteDoctor[]>(
+    []
   );
+  const mapRef = useRef<L.Map | null>(null);
+  const [selectedDoctor, setSelectedDoctor] = useState<
+    IDoctorDetails | IFavouriteDoctor | null
+  >(null);
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const dataDoctor: IDoctorDetails[] = await fetchDoctorsData();
+        const dataDoctor: IDoctorDetails[] | IFavouriteDoctor[] =
+          await fetchDoctorsData();
         setDoctors(dataDoctor);
       } catch (error) {
         console.error("Error fetching doctors:", error);
@@ -36,7 +39,7 @@ const MapSearch = () => {
       const setupMap = async () => {
         const map = await initializeMap(
           doctors,
-          (doctorWithCoords: IDoctorDetails) => {
+          (doctorWithCoords: IDoctorDetails | IFavouriteDoctor) => {
             setSelectedDoctor(doctorWithCoords);
           }
         );
@@ -47,8 +50,10 @@ const MapSearch = () => {
     }
   }, [doctors]);
 
-  const handleSelectDoctor = async (doctor: IDoctorDetails) => {
-    const coords = await updateMapView(mapRef.current, doctor);
+  const handleSelectDoctor = async (
+    doctor: IDoctorDetails | IFavouriteDoctor
+  ) => {
+    const coords = await updateMapView(mapRef.current!, doctor);
     setSelectedDoctor({ ...doctor, ...coords });
   };
 
@@ -76,7 +81,7 @@ const MapSearch = () => {
         {/* Doctors List */}
         <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300">
           <div className="divide-y divide-gray-100">
-            {doctors.map((doctor) => (
+            {doctors.map((doctor: IDoctorDetails | IFavouriteDoctor) => (
               <MapDoctorCard
                 key={doctor.user_id}
                 doctor={doctor}

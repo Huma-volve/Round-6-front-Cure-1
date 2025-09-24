@@ -1,11 +1,11 @@
 import React from "react";
 import { Clock, Star } from "lucide-react";
-import type { IDoctorDetails } from "@/types";
+import type { IDoctorDetails, IFavouriteDoctor } from "@/types";
 import imageDo from "../../assets/images/doctorPhoto.jpg";
 import { formatTime } from "@/components/common/CardDoctor";
 
 interface SelectedDoctorPopupProps {
-  selectedDoctor: IDoctorDetails;
+  selectedDoctor: IDoctorDetails | IFavouriteDoctor;
   onClose: () => void;
 }
 
@@ -13,6 +13,16 @@ const SelectedDoctorPopup: React.FC<SelectedDoctorPopupProps> = ({
   selectedDoctor,
   onClose,
 }) => {
+  const start =
+    "availability" in selectedDoctor
+      ? selectedDoctor.availability[0].start_time
+      : selectedDoctor.start_time;
+
+  const end =
+    "availability" in selectedDoctor
+      ? selectedDoctor.availability[0].end_time
+      : selectedDoctor.end_time;
+
   return (
     <div className="absolute bottom-2 left-2 right-2 sm:bottom-4 sm:left-4 sm:right-4 lg:right-auto lg:max-w-md bg-white rounded-xl shadow-2xl border border-gray-200 backdrop-blur-sm">
       <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-100">
@@ -58,13 +68,9 @@ const SelectedDoctorPopup: React.FC<SelectedDoctorPopupProps> = ({
           <div className="flex items-center space-x-2 text-gray-600">
             <Clock className="w-4 h-4" />
             <div className="flex flex-col sm:flex-row sm:space-x-1">
-              <span className="font-medium">
-                {formatTime(selectedDoctor.availability[0].start_time)}
-              </span>
+              <span className="font-medium">{formatTime(start)}</span>
               <span className="hidden sm:inline">-</span>
-              <span className="font-medium">
-                {formatTime(selectedDoctor.availability[0].end_time)}
-              </span>
+              <span className="font-medium">{formatTime(end)}</span>
             </div>
           </div>
           <div className="flex items-center space-x-2 text-green-600">
